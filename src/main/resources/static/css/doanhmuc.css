@@ -1,0 +1,26 @@
+.category p {
+    color: rgb(0, 119, 132);
+    text-align: center;
+}
+.category img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    transition: transform 0.5s ease;
+}
+.category img:hover {
+    /* transform: translatey(-5px);
+    transition: transform 0.4s ease; */
+    transform: scale(1.1);
+}
+
+.category i {
+    color: rgb(210, 110, 75);
+    font-size: 13px;
+}
+.category h5{
+    text-align: center;
+}
+.category .star{
+    text-align: center;
+}

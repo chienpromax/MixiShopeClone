@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+</head>
+
+<body>
+    <div class="container-fluid px-4" layout:fragment="content">
+        <div class="row g-3 my-2">
+            <div class="table-responsive">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h2 class="text-primary">Danh sách danh mục</h2>
+                        <i th:text="${message}" style="color: red; font-size: 1.3rem; font-weight: 500;"></i>
+                    </div>
+                </div>
+                <table class="table table-bordered table-successtable-dark table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>account ID</th>
+                            <th>pas</th>
+                            <th>email</th>
+                            <th>role</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="account : ${accounts}">
+                            <td th:text="${account.username}">1</td>
+                            <td th:text="${account.password}"></td>
+                            <td th:text="${account.email}"></td>
+                            <td th:text="${account.role}"></td>
+                            <td>
+                                <a th:href="@{'/admin/accounts/edit/' + ${account.username}}"
+                                    class="btn btn-primary" type="button">edit</a> |
+                                <a th:href="@{'/admin/accounts/delete/' + ${account.username}}"
+                                    class="btn btn-primary" type="button">delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

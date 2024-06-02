@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+</head>
+
+<body>
+    <div class="container-fluid px-4" layout:fragment="content">
+        <div class="row g-3 my-2">
+            <div class="table-responsive">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h2 class="text-primary">Danh sách danh mục</h2>
+                        <i th:text="${message}" style="color: red; font-size: 1.3rem; font-weight: 500;"></i>
+                    </div>
+                </div>
+                <table class="table table-bordered table-successtable-dark table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>customer ID</th>
+                            <th>name</th>
+                            <th>phone</th>
+                            <th>ngày đăng kí</th>
+                            <th>tỉnh</th>
+                            <th>quận</th>
+                            <th>xã</th>
+                            <th>Dịa xhỉ giao hàng</th>
+                            <th>note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="customer : ${customers}">
+                            <td th:text="${customer.customerId}"></td>
+                            <td th:text="${customer.fullName}"></td>
+                            <td th:text="${customer.phone}"></td>
+                            <td th:text="${customer.registeredDate}"></td>
+                            <td th:text="${customer.tinh}"></td>
+                            <td th:text="${customer.quan}"></td>
+                            <td th:text="${customer.xa}"></td>
+                            <td th:text="${customer.address}"></td>
+                            <td th:text="${customer.note}"></td>
+                            <td>
+                                <a th:href="@{'/admin/customers/edit/' + ${customer.customerId}}"
+                                    class="btn btn-primary" type="button">edit</a> |
+                                <a th:href="@{'/admin/customers/delete/' + ${customer.customerId}}"
+                                    class="btn btn-primary" type="button">delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

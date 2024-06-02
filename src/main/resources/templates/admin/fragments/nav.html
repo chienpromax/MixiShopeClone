@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+</head>
+
+<body>
+    <div class="bg-white" id="sidebar-wrapper" th:fragment="nav">
+        <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">Admin
+            Manager</div>
+        <div class="list-group list-group-flush my-3">
+            <a th:href="@{/admin/products/searchpaginated}"
+                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Product</a>
+            <a th:href="@{/admin/categories/searchpaginated}"
+                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Category</a>
+            <a th:href="@{/admin/accounts/searchpaginated}"
+                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Customer</a>
+            <a th:href="@{/admin/customers/searchpaginated}"
+                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">info Customer</a>
+            <a th:href="@{/admin/orderDetail}"
+                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Order Detail</a>
+        </div>
+    </div>
+</body>
+
+</html>

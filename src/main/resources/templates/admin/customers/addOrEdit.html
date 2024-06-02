@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+</head>
+
+<body>
+    <div class="container-fluid px-4" layout:fragment="content">
+        <div class="row g-3 my-2">
+            <form th:action="@{/admin/customers/addOrUpdate}" method="post" th:object="${customer}">
+                <div class="mb-3">
+                    <div class="row bg-white border border-dark rounded p-2">
+                        <label for="" class="primary-text form-label fs-4 text-center">info customer</label>
+                        <hr>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">CustomerId</label>
+                            <input type="hidden" th:field="*{isEdit}" />
+                            <input th:field="*{customerId}" type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">FullName</label>
+                            <input th:field="*{fullName}" type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">Phone</label>
+                            <input th:field="*{phone}" type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">RegisteredDate</label>
+                            <input th:field="*{registeredDate}" type="date" class="form-control" />
+                        </div>                        
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">Tinh</label>
+                            <input th:field="*{tinh}" type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">Quan</label>
+                            <input th:field="*{quan}" type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">Xa</label>
+                            <input th:field="*{xa}" type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">Address</label>
+                            <input th:field="*{address}" type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">Username</label>
+                            <input th:field="*{username}" type="text" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Note</label>
+                            <textarea th:field="*{note}" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                            <span th:if="${customer.isEdit}">Update</span>
+                            <span th:unless="${customer.isEdit}">Save</span>
+                        </button>
+                        <a th:href="@{/admin/customers/searchpaginated}" class="btn btn-primary" type="button">List</a>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

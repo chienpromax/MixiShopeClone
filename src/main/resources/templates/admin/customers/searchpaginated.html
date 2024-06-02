@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+</head>
+
+<body>
+    <div class="container-fluid px-4" layout:fragment="content">
+        <div class="row g-3 my-2">
+            <div class="table-responsive">
+                <div class="card mb-2">
+                    <div class="card-body text-center">
+                        <h2 class="text-primary">Danh sách người dùng</h2>
+                        <i th:text="${message}" style="color: red; font-size: 1.3rem; font-weight: 500;"></i>
+                    </div>
+                    <div class="row m-2 mb-2 pb-3">
+                        <div class="col-md-6 ">
+                            <form th:action="@{/admin/customers/searchpaginated}">
+                                <div class="form-inline float-left d-flex justify-content-center align-items-center">
+                                    <label for="" class="form-label me-2">Search Name</label>
+                                    <input type="text" class="form-control" style="width: 60%;" name="nameSearch"
+                                        id="" />
+                                    <button class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end">
+                            <a class="btn btn-primary" th:href="@{/admin/customers/add}">Add new</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" th:if="${!customerPage.hasContent()}">
+                    <div class="col">
+                        <div class="alert alert-danger" role="alert">
+                            <Strong>No customers Found</Strong>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-successtable-dark table-striped table-hover"
+                    th:if="${customerPage.hasContent()}">
+                    <thead>
+                        <tr>
+                            <th>customer ID</th>
+                            <th>name</th>
+                            <th>phone</th>
+                            <th>ngày đăng kí</th>
+                            <th>tỉnh</th>
+                            <th>quận</th>
+                            <th>xã</th>
+                            <th>địa chỉ</th>
+                            <th>note</th>
+                            <th>Eđit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="customer, iStat : ${customerPage.content}">
+                            <td th:text="${customer.customerId}"></td>
+                            <td th:text="${customer.fullName}"></td>
+                            <td th:text="${customer.phone}"></td>
+                            <td th:text="${customer.registeredDate}"></td>
+                            <td th:text="${customer.tinh}"></td>
+                            <td th:text="${customer.quan}"></td>
+                            <td th:text="${customer.xa}"></td>
+                            <td th:text="${customer.address}"></td>
+                            <td th:text="${customer.note}"></td>
+                            <td>
+                                <a th:href="@{'/admin/customers/edit/' + ${customer.customerId}}"
+                                    class="btn btn-primary" type="button">edit</a> |
+                                <a th:href="@{'/admin/customers/delete/' + ${customer.customerId}}"
+                                    class="btn btn-primary" type="button">delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <form action="">
+                                <label for="size" class="form-label">Page size</label>
+                                <select name="size" id="size" class="form-control" 
+                                onchange="this.form.submit()">
+                                    <option th:selected="${customerPage.size == 5}" value="5">5</option>
+                                    <option th:selected="${customerPage.size == 10}" value="10">10</option>
+                                    <option th:selected="${customerPage.size == 15}" value="15">15</option>
+                                    <option th:selected="${customerPage.size == 20}" value="20">20</option>
+                                    <option th:selected="${customerPage.size == 30}" value="30">30</option>
+                                </select>
+                            </form>
+                        </div>
+                        <nav aria-label="Page navigation" th:if="${customerPage.totalPages > 0}">
+                            <ul class="pagination d-flex justify-content-center">
+                                <li th:class="${1 == customerPage.number + 1} ? 'page-item active' : 'page-item'">
+                                    <a class="page-link"
+                                        th:href="@{/admin/customers/searchpaginated(name=${name}, size=${customerPage.size}, page=${1})}">
+                                        First
+                                    </a>
+                                </li>
+                                <li class="page-item active" th:each="pageNumber : ${pageNumbers}"
+                                    th:if="${customerPage.totalPages > 1}"
+                                    th:class="${pageNumber == customerPage.number + 1} ? 'page-item active' : 'page-item'">
+                                    <a class="page-link"
+                                        th:href="@{/admin/customers/searchpaginated(name=${name}, size=${customerPage.size}, page=${pageNumber})}"
+                                        th:text="${pageNumber}">1</a>
+                                </li>
+                                <li
+                                    th:class="${customerPage.totalPages == customerPage.number + 1} ? 'page-item active' : 'page-item'">
+                                    <a class="page-link"
+                                        th:href="@{/admin/customers/searchpaginated(name=${name}, size=${customerPage.size}, page=${customerPage.totalPages})}">
+                                        Last
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

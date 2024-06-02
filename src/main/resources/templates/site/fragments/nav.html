@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light" th:fragment="nav">
+        <div class="container">
+            <a class="navbar-brand" th:href="${home}"><img width="100" height="60" src="/image/logo-mixi-tét.png"
+                    alt=""></a>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{home}" aria-current="page">Home
+                            <span class="visually-hidden">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Doanh mục sản phẩm</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item nav-link" th:href="@{doanhmuc}">> Đồ lưu niệm mixi</a>
+                            <a class="dropdown-item nav-link" href="#">> Áo mixi</a>
+                            <a class="dropdown-item nav-link" href="#">> Áo ba lỗ</a>
+                            <a class="dropdown-item nav-link" href="#">> Áo CSGO</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{thongBao}">Thông báo</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Tài khoản</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item nav-link" th:href="@{login}">> Đăng nhập</a>
+                            <a class="dropdown-item nav-link" href="#">> Đăng ký</a>
+                            <a class="dropdown-item nav-link" href="#">> Quên mật khẩu</a>
+                            <a class="dropdown-item nav-link" href="#">> Đổi mật khẩu</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mt-lg-0 cart ms-3 ">
+                    <li class="nav-item nav-item-cart">
+                        <div class="d-flex align-items-center cart-title">
+                            <span class=" me-1">Giỏ hàng / 88.000 đ</span>
+                            <i style="font-size: 1.56rem; font-weight: 600;" class="bi bi-cart3 "></i>
+                            <span class="cart-count">1</span>
+                        </div>
+                        <!-- cart-shopping -->
+                        <div class="row cart-shopping">
+                            <div class="card">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td><img width="60px" src="/image/DSC016343-768x919.jpg" alt="">
+                                                </td>
+                                                <td colspan="2">Áo phông Mixi logo – Đen <br>
+                                                    <hr> <span>1x1 = 88.000đ</span>
+                                                </td>
+                                                <td><a href="" class="d-flex align-items-center"><i
+                                                            class="bi bi-x-circle"></i></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">Tổng số phụ: 88.000 ₫</h5>
+                                    <hr>
+                                    <div class="row">
+                                        <button class="btn-Cart"><a href="cart-detail.html">Xem giỏi hàng</a></button>
+                                        <button class="btn-Cart2 mt-2"><a href="">Thanh toán</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+
+</html>
