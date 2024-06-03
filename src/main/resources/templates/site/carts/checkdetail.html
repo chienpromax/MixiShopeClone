@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{site/index.html}">
+
+<head>
+</head>
+
+<body>
+    <section class="container py-5" layout:fragment="main">
+        <div th:replace="~{site/fragments/steepaction :: steepaction}"></div>
+        <!-- cart detail -->
+        <section class="container py-2 pt-3">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="mb-3">
+                        <h4>THÔNG TIN THANH TOÁN</h4>
+                        <label for="" class="form-label">Họ và tên *</label>
+                        <input type="text" class="form-control" name="" id="" placeholder="Nhập họ và tên" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label mt-3">Số điện thoại *</label>
+                                    <input type="text" class="form-control" name="" id=""
+                                        placeholder="Nhập số điện thoại" />
+                                    <label for="" class="form-label mt-3">Tỉnh/Thành phố *</label>
+                                    <input type="text" class="form-control" name="" id="" placeholder="" />
+                                    <label for="" class="form-label mt-3">Xã/Phường thị trấn *</label>
+                                    <input type="text" class="form-control" name="" id="" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label mt-3">Đia chỉ email *</label>
+                                    <input type="text" class="form-control" name="" id="" placeholder="Nhập Email" />
+                                    <label for="" class="form-label mt-3">Quận/Huyện *</label>
+                                    <input type="text" class="form-control" name="" id="" placeholder="" />
+                                    <label for="" class="form-label mt-3">Địa chỉ giao hàng *</label>
+                                    <input type="text" class="form-control" name="" id=""
+                                        placeholder="Nhập địa chỉ cụ thể số nhà" />
+                                </div>
+                            </div>
+                        </div>
+                        <h4>THÔNG TIN BỔ SUNG</h4>
+                        <label for="" class="form-label">Ghi chú đơn hàng</label>
+                        <textarea class="form-control" name="" id="" rows="2"></textarea>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <button class="btn-Cart"><a href="doanhmuc.html">Lưu thông tin</a></button>
+                        <button class="btn-Cart mx-2"><a href="">Cập nhật</a></button>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="card check-detail-cart">
+                        <div class="card-body">
+                            <h4 class="card-title">ĐƠN HÀNG CỦA BẠN</h4>
+                            <p class="card-text py-2">SẢN PHẨM <span class="float-end">TẠM TÍNH</span></p>
+                            <p class="card-text">Áo mixi-M x 1 <span class="float-end">88.000 đ</span></p>
+                            <p class="card-text">Tạm tính: <span class="float-end">88.000 đ</span></p>
+                            <p class="card-text">Tổng: <span class="float-end">88.000 đ</span></p>
+                            <p class="card-text py-2">Hoá đơn chưa kèm phí ship (Quý khách thanh toán bằng tiền mặt hoặc
+                                chuyển
+                                khoản theo yêu cầu với đơn hàng của shop).</p>
+                            <div class="form-check py-2">
+                                <input class="form-check-input" type="checkbox" value="" id="" checked />
+                                <label class="form-check-label" for=""> Tôi đã đọc và đồng ý với điều khoản và điều kiện
+                                    của website * </label>
+                            </div>
+                            <div class="row py-2">
+                                <button class="btn-Cart"><a href="">Đặt hàng</a></button>
+                            </div>
+                            <p class="py-2">Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải
+                                nghiệm sử dụng website, và cho các mục đích cụ thể khác đã được mô tả trong chính sách
+                                riêng tư.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</body>
+
+</html>

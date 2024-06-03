@@ -22,6 +22,34 @@
         <section class="container">
             <div class="row py-3">
                 <div class="col-md-6 d-flex justify-content-center">
+                    <img th:src="@{'/uploads/' + ${product.image}}" class="img-fluid rounded-top zoom-on-hover" alt="" />
+                </div>
+                <div class="col md-6">
+                    <div class="">
+                        <div class="card-body">
+                            <h4 class="card-title" style="font-weight: 700;" th:text="${product.name}"></h4>
+                            <hr>
+                            <div class="star" style="color: rgb(214,124,93);">
+                                <span><i class="bi bi-star-fill"></i></span>
+                                <span><i class="bi bi-star-fill"></i></span>
+                                <span><i class="bi bi-star-fill"></i></span>
+                                <span><i class="bi bi-star-fill"></i></span>
+                                <span><i class="bi bi-star-fill"></i></span>
+                            </div>
+                            <p class="card-text" th:text="${product.description}">24 đánh giá khách hàng</p>
+                            <h3 th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 2, 'COMMA')} + ' VND'">
+                            </h3>
+                            <button class="btn-Cart2 mt-2" style="border-radius: 10px;"><a href="">Thêm vào giỏ
+                                    hàng</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section class="container">
+            <div class="row py-3">
+                <div class="col-md-6 d-flex justify-content-center">
                     <img src="/image/lego5-300x400.jpg" class="img-fluid rounded-top zoom-on-hover" alt="" />
                 </div>
                 <div class="col md-6">
@@ -38,13 +66,12 @@
                             </div>
                             <p class="card-text">24 đánh giá khách hàng</p>
                             <h3>250.000 đ</h3>
-                            <button class="btn-Cart2 mt-2" style="border-radius: 20px;"><a href="">Thêm vào giỏ
-                                    hàng</a></button>
+                            <button class="btn-Cart2 mt-2" style="border-radius: 10px;"><a href="">Thêm vào giỏ hàng</a></button>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- same product -->
 

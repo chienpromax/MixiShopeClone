@@ -153,5 +153,8 @@ public class AccountSerciceImpl implements AccountService{
 		accountRepository.deleteAll();
 	}
 	
-
+	@Override
+    public boolean existsByUsername(String username) {
+        return accountRepository.existsById(username);
+    }
 }

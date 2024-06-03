@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-
 </head>
 
 <body>
@@ -18,30 +17,42 @@
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{home}" aria-current="page">Home
+                        <a class="nav-link active" th:href="@{/site/home}" aria-current="page">Home
                             <span class="visually-hidden">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Doanh mục sản phẩm</a>
+                            aria-haspopup="true" aria-expanded="false">Doanh mục</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item nav-link" th:href="@{doanhmuc}">> Đồ lưu niệm mixi</a>
-                            <a class="dropdown-item nav-link" href="#">> Áo mixi</a>
-                            <a class="dropdown-item nav-link" href="#">> Áo ba lỗ</a>
-                            <a class="dropdown-item nav-link" href="#">> Áo CSGO</a>
+                            <div th:each="category : ${categories}">
+                                <a class="dropdown-item nav-link" th:href="@{/site/category/{categoryid}(categoryid=${category.id})}">> <span th:text="${category.name}"></span></a>
+                            </div>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{thongBao}">Thông báo</a>
+                        <a class="nav-link" th:href="@{/site/thongBao}">Thông báo</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Tài khoản</a>
+                            aria-haspopup="true" aria-expanded="false">
+                            <span th:if="${loggedInUser != null}" th:text="${loggedInUser}"></span>
+                            <span th:unless="${loggedInUser != null}">Tài khoản</span>
+                        </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item nav-link" th:href="@{login}">> Đăng nhập</a>
-                            <a class="dropdown-item nav-link" href="#">> Đăng ký</a>
-                            <a class="dropdown-item nav-link" href="#">> Quên mật khẩu</a>
-                            <a class="dropdown-item nav-link" href="#">> Đổi mật khẩu</a>
+                            <a class="dropdown-item nav-link" th:unless="${loggedInUser != null}"
+                                th:href="@{/site/accounts/login}"> Đăng nhập</a>
+                            <a class="dropdown-item nav-link" th:unless="${loggedInUser != null}"
+                                th:href="@{/site/accounts/register}"> Đăng ký</a>
+                            <a class="dropdown-item nav-link" th:unless="${loggedInUser != null}"
+                                th:href="@{/site/accounts/forgotpassword}"> Quên mật khẩu</a>
+                            <!-- Hiển thị các liên kết khác -->
+                            <a class="dropdown-item nav-link" th:if="${loggedInUser != null}"
+                                th:href="@{/site/accounts/changepassword}">Đổi mật khẩu</a>
+                            <a class="dropdown-item nav-link" th:if="${loggedInUser != null}"
+                                th:href="@{/site/carts/checkdetail}">Thông tin tài khoản</a>
+                            <!-- <a class="dropdown-item nav-link" th:if="${loggedInUser != null}" th:href="@{/site/accounts/logout}">Đăng xuất</a> -->
+                            <a class="dropdown-item nav-link" th:if="${loggedInUser != null}"
+                                th:href="@{/site/accounts/logout}">Đăng xuất</a>
                         </div>
                     </li>
                 </ul>
@@ -74,7 +85,8 @@
                                     <h5 class="card-title text-center">Tổng số phụ: 88.000 ₫</h5>
                                     <hr>
                                     <div class="row">
-                                        <button class="btn-Cart"><a href="cart-detail.html">Xem giỏi hàng</a></button>
+                                        <button class="btn-Cart"><a th:href="@{/site/carts/cartdetail}">Xem giỏi
+                                                hàng</a></button>
                                         <button class="btn-Cart2 mt-2"><a href="">Thanh toán</a></button>
                                     </div>
                                 </div>

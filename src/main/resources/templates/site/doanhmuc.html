@@ -53,86 +53,33 @@
                     <hr>
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link" th:href="${doanhmuc}">> Đồ lưu niệm mixi</a>
-                            <a class="nav-link" href="#">> Áo mixi</a>
-                            <a class="nav-link" href="#">> Áo ba lỗ</a>
-                            <a class="nav-link" href="#">> Áo CSGO</a>
+                            <div th:each="category : ${categories}">
+                                <a class="dropdown-item nav-link" th:href="@{/site/category/{categoryid}(categoryid=${category.id})}">> <span th:text="${category.name}"></span></a>
+                            </div>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-9 m-auto">
                     <div class="row">
-                        <div class="col-md-4 pt-2">
-                            <div class="p-2">
-                                <div class="card-body">
-                                    <a th:href="@{productdetail}">
-                                        <img src="/image/binhNuoc.jpg" class="img-fluid pb-3" alt="">
-                                    </a>
-                                    <p>ĐỒ LƯU NIỆM MIXI</p>
-                                    <p>Cốc Mixi 1200ml</p>
-                                    <div class="star">
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                    </div>
-                                    <h5>200.000 đ</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 pt-2">
+                        <div class="col-md-4 pt-2" th:each="product : ${products}">
                             <div class=" p-2">
                                 <div class="card-body">
-                                    <img src="/image/dép-300x400.jpg" class="img-fluid pb-3" alt="">
-                                    <p>ĐỒ LƯU NIỆM MIXI</p>
-                                    <p>Cốc Mixi 1200ml</p>
+                                    <img th:src="@{/image/{image}(image=${product.image})}" class="img-fluid pb-3" alt="">
+                                    <p th:text="${product.category.name}"></p>
+                                    <p th:text="${product.name}"></p>
                                     <div class="star">
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
+                                        <span th:each="i : ${#numbers.sequence(1, product.rating)}">
+                                            <i class="bi bi-star-fill"></i>
+                                        </span>
+                                        <span th:each="i : ${#numbers.sequence(product.rating + 1, 5)}">
+                                            <i class="bi bi-star"></i>
+                                        </span>
                                     </div>
-                                    <h5>200.000 đ</h5>
+                                    <h5 th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA')} + ' đ'"></h5>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 pt-2">
-                            <div class=" p-2">
-                                <div class="card-body">
-                                    <img src="/image/lego1-300x400.jpg" class="img-fluid pb-3" alt="">
-                                    <p>ĐỒ LƯU NIỆM MIXI</p>
-                                    <p>Lego Mixi 1200ml</p>
-                                    <div class="star">
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                    </div>
-                                    <h5>200.000 đ</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 pt-2">
-                            <div class=" p-2">
-                                <div class="card-body">
-                                    <img src="/image/lego2-300x400.jpg" class="img-fluid pb-3" alt="">
-                                    <p>ĐỒ LƯU NIỆM MIXI</p>
-                                    <p>Lego Mixi 1200ml</p>
-                                    <div class="star">
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                        <span><i class="bi bi-star-fill"></i></span>
-                                    </div>
-                                    <h5>200.000 đ</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 pt-2">
+                        <!-- <div class="col-md-4 pt-2">
                             <div class=" p-2">
                                 <div class="card-body">
                                     <img src="/image/lego3-300x400.jpg" class="img-fluid pb-3" alt="">
@@ -148,7 +95,7 @@
                                     <h5>200.000 đ</h5>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <nav aria-label="Page navigation ">
                             <ul class="pagination d-flex justify-content-center">
                                 <li class="page-item disabled">

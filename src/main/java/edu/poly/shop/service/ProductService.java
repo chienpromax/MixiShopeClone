@@ -66,5 +66,5 @@ public interface ProductService {
 
 	List<Product> findByNameContaining(String name);
 
-
+	List<Product> findByCategoryId(Long categoryId);
 }

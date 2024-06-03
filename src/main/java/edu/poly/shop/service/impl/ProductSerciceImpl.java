@@ -23,6 +23,11 @@ public class ProductSerciceImpl implements ProductService{
 	}
 
 	@Override
+	public List<Product> findByCategoryId(Long categoryid) {
+		return productRepository.findByCategoryId(categoryid);
+	}
+
+	@Override
 	public List<Product> findByNameContaining(String name) {
 		return productRepository.findByNameContaining(name);
 	}

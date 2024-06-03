@@ -32,8 +32,8 @@
                 <div th:each="product : ${products}" class="col-md-3 pt-2" data-aos="fade-up">
                     <div class="p-2">
                         <div class="card-body">
-                            <a th:href="@{/productdetail/{productid}(id=${product.productid})}">
-                                <img th:src="@{'/uploads/' + ${product.image}}" class="img-fluid pb-3" alt="" />
+                            <a th:href="@{/site/productdetail/{productid}(productid=${product.productid})}">
+                                <img th:src="@{'/uploads/' + ${product.image}}" class="img-fluid pb-2" alt="" />
                             </a>
                             <p th:text="${product.category.name}"></p>
                             <p th:text="${product.name}"></p>
@@ -49,94 +49,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="row ">
-                <div class="col-md-3 pt-2" data-aos="fade-up">
-                    <div class=" p-2">
-                        <div class="card-body">
-                            <a th:href="@{productdetail}"><img src="/image/binhNuoc.jpg"
-                                    class="img-fluid pb-3" alt=""></a>
-                            <p>ĐỒ LƯU NIỆM MIXI</p>
-                            <p>Cốc Mixi 1200ml</p>
-                            <div class="star">
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                            </div>
-                            <h5>200.000 đ</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 pt-2" data-aos="fade-up">
-                    <div class=" p-2">
-                        <div class="card-body">
-                            <img src="/image/DSC016343-300x400.jpg" class="img-fluid pb-3" alt="">
-                            <p>ÁO MIXI</p>
-                            <p>Áo logo 2023</p>
-                            <div class="star">
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                            </div>
-                            <h5>200.000 đ</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 pt-2" data-aos="fade-up">
-                    <div class=" p-2">
-                        <div class="card-body">
-                            <img src="/image/DSC016343-768x919.jpg" class="img-fluid pb-3" alt="">
-                            <p>ÁO MIXI</p>
-                            <p>Áo logo 2023</p>
-                            <div class="star">
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                            </div>
-                            <h5>200.000 đ</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 pt-2" data-aos="fade-up">
-                    <div class=" p-2">
-                        <div class="card-body">
-                            <img src="/image/DUY04433-300x400.jpg" class="img-fluid pb-3" alt="">
-                            <p>ÁO MIXI</p>
-                            <p>Áo logo 2023</p>
-                            <div class="star">
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                            </div>
-                            <h5>200.000 đ</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 pt-2" data-aos="fade-up">
-                    <div class=" p-2">
-                        <div class="card-body">
-                            <img src="/image/phanHoi2.jpg" class="img-fluid pb-3" alt="">
-                            <p>ÁO MIXI</p>
-                            <p>Áo logo 2023</p>
-                            <div class="star">
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                                <span><i class="bi bi-star-fill"></i></span>
-                            </div>
-                            <h5>200.000 đ</h5>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </section>
 
         <!-- video -->

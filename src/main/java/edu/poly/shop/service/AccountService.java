@@ -68,5 +68,5 @@ public interface AccountService {
 
 	void setAccountRepository(AccountRepository accountRepository);
 
-	
+	boolean existsByUsername(String username);
 }
