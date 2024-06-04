@@ -25,7 +25,10 @@
                             aria-haspopup="true" aria-expanded="false">Doanh mục</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
                             <div th:each="category : ${categories}">
-                                <a class="dropdown-item nav-link" th:href="@{/site/category/{categoryid}(categoryid=${category.id})}">> <span th:text="${category.name}"></span></a>
+                                <a class="dropdown-item nav-link"
+                                    th:href="@{/site/doanhmuc/{categoryid}(categoryid=${category.categoryid})}">
+                                    <span th:text="${category.name}"></span>
+                                </a>
                             </div>
                         </div>
                     </li>

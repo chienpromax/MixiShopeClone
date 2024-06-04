@@ -24,7 +24,7 @@
                 </div>
                 <div class="row pt-3">
                     <div class="col-lg-7 m-auto">
-                        <button class="btn-product"><a th:href="${doanhmuc}">XEM TẤT CẢ</a></button>
+                        <button class="btn-product"><a th:href="@{/site/allproducts}">XEM TẤT CẢ</a></button>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                                 <span><i class="bi bi-star-fill"></i></span>
                                 <span><i class="bi bi-star-fill"></i></span>
                             </div>
-                            <h5 th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 2, 'COMMA')} + ' VND'"></h5>
+                            <h5 th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 3, 'COMMA')} + ' VND'"></h5>
                         </div>
                     </div>
                 </div>

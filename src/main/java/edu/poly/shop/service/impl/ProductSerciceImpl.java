@@ -21,11 +21,11 @@ public class ProductSerciceImpl implements ProductService{
 	public ProductSerciceImpl(ProductRepository productRepository) {
 		this.productRepository = productRepository;
 	}
-
+//phân trang doanh muc
 	@Override
-	public List<Product> findByCategoryId(Long categoryid) {
-		return productRepository.findByCategoryId(categoryid);
-	}
+    public Page<Product> findByCategoryid(Long categoryid, Pageable pageable) {
+        return productRepository.findByCategoryid(categoryid, pageable);
+    }
 
 	@Override
 	public List<Product> findByNameContaining(String name) {
