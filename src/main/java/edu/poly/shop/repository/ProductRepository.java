@@ -18,4 +18,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // List<Product> findByCategoryid(Long categoryid);
 
     Page<Product> findByCategoryid(Long categoryId, Pageable pageable);
+
+    // Tìm kiếm sản phẩm theo categoryid và giá trong khoảng minPrice và maxPrice
+    Page<Product> findByCategoryidAndPriceBetween(Long categoryId, Double minPrice, Double maxPrice, Pageable pageable);
+
+    // Tìm kiếm sản phẩm theo giá trong khoảng minPrice và maxPrice
+    Page<Product> findByPriceBetween(Double minPrice, Double maxPrice, Pageable pageable);
+
+    Page<Product> findByCategoryidAndNameContaining(Long categoryId, String name, Pageable pageable);
+
 }

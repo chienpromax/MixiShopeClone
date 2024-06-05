@@ -14,18 +14,42 @@ import edu.poly.shop.repository.ProductRepository;
 import edu.poly.shop.service.ProductService;
 
 @Service
-public class ProductSerciceImpl implements ProductService{
+public class ProductSerciceImpl implements ProductService {
 
 	ProductRepository productRepository;
 
 	public ProductSerciceImpl(ProductRepository productRepository) {
 		this.productRepository = productRepository;
 	}
-//phân trang doanh muc
+
 	@Override
-    public Page<Product> findByCategoryid(Long categoryid, Pageable pageable) {
-        return productRepository.findByCategoryid(categoryid, pageable);
+    public Long countAllProducts() {
+        return productRepository.count();
     }
+
+	@Override
+	public Page<Product> findByCategoryidAndNameContaining(Long categoryId, String name, Pageable pageable) {
+		return productRepository.findByCategoryidAndNameContaining(categoryId, name, pageable);
+	}
+
+	// Lọc sản phẩm theo categoryid và giá trong khoảng minPrice và maxPrice
+	@Override
+	public Page<Product> findByCategoryidAndPriceBetween(Long categoryId, Double minPrice, Double maxPrice,
+			Pageable pageable) {
+		return productRepository.findByCategoryidAndPriceBetween(categoryId, minPrice, maxPrice, pageable);
+	}
+
+	// Lọc sản phẩm theo giá trong khoảng minPrice và maxPrice
+	@Override
+	public Page<Product> findByPriceBetween(Double minPrice, Double maxPrice, Pageable pageable) {
+		return productRepository.findByPriceBetween(minPrice, maxPrice, pageable);
+	}
+
+	// phân trang doanh muc
+	@Override
+	public Page<Product> findByCategoryid(Long categoryid, Pageable pageable) {
+		return productRepository.findByCategoryid(categoryid, pageable);
+	}
 
 	@Override
 	public List<Product> findByNameContaining(String name) {

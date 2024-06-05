@@ -13,7 +13,16 @@ import edu.poly.shop.model.Product;
 import edu.poly.shop.repository.ProductRepository;
 
 public interface ProductService {
-	;
+	
+	Long countAllProducts();
+
+	Page<Product> findByCategoryidAndNameContaining(Long categoryId, String name, Pageable pageable);
+	
+	// tìm theo khoảng giá
+	Page<Product> findByCategoryidAndPriceBetween(Long categoryId, Double minPrice, Double maxPrice, Pageable pageable);
+
+    Page<Product> findByPriceBetween(Double minPrice, Double maxPrice, Pageable pageable);
+
 	//phân trang doanh muc
 	Page<Product> findByCategoryid(Long categoryid, Pageable pageable);
 	
