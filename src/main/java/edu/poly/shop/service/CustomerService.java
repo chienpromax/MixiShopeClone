@@ -12,6 +12,8 @@ import edu.poly.shop.model.Customer;
 
 public interface CustomerService {
 
+	Customer findByUsername(String username);
+
 	void deleteAll();
 
 	<S extends Customer> List<S> findAll(Example<S> example, Sort sort);

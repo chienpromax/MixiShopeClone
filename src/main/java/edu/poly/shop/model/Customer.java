@@ -3,6 +3,8 @@ package edu.poly.shop.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,8 +37,12 @@ public class Customer implements Serializable {
     @Column(name = "Phone", columnDefinition = "nvarchar(50) not null")
     private String phone;
 
+    @Column(name = "Email", columnDefinition = "nvarchar(50)")
+    private String email;
+
     @Column(name = "RegisteredDate", columnDefinition = "date not null")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date registeredDate;
 
     @Column(name = "Tinh", columnDefinition = "nvarchar(50) not null")

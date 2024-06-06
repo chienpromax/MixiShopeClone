@@ -49,10 +49,8 @@ public class CustomerController {
 		if (result.hasErrors()) {
 		return new ModelAndView("admin/customers/addOrEdit");
 		}
-		System.out.println("DTO: " + dto);
 		Customer entity = new Customer();
 		BeanUtils.copyProperties(dto, entity);
-		System.out.println("Entity: " + entity);
 		customerService.save(entity);
 		model.addAttribute("message", "Thêm thành công");
 		return new ModelAndView("redirect:/admin/customers/searchpaginated", model);
@@ -66,7 +64,6 @@ public class CustomerController {
 	if (opt.isPresent()) {
 	Customer entity = opt.get();
 	BeanUtils.copyProperties(entity, dto);
-	System.out.println("Registered Date: " + dto.getRegisteredDate());
 	dto.setIsEdit(true);
 	model.addAttribute("customer", dto);
 	return new ModelAndView("admin/customers/addOrEdit", model);

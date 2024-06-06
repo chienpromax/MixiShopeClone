@@ -22,7 +22,8 @@
         <section class="container">
             <div class="row py-3">
                 <div class="col-md-6 d-flex justify-content-center">
-                    <img th:src="@{'/uploads/' + ${product.image}}" class="img-fluid rounded-top zoom-on-hover" alt="" />
+                    <img th:src="@{'/uploads/' + ${product.image}}" class="img-fluid rounded-top zoom-on-hover"
+                        alt="" />
                 </div>
                 <div class="col md-6">
                     <div class="">
@@ -40,7 +41,10 @@
                             <p class="card-text">24 đánh giá khách hàng</p>
                             <h3 th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 2, 'COMMA')} + ' VND'">
                             </h3>
-                            <button class="btn-Cart2 mt-2" style="border-radius: 10px;"><a href="">Thêm vào giỏ hàng</a></button>
+                            <button class="btn-Cart2 mt-2" style="height: 40px; border-radius: 10px;">
+                                <a th:href="@{/site/addtocart/{productid}(productid=${product.productid})}">Thêm vào giỏ hàng</a>
+                            </button>
+                            
                         </div>
                     </div>
                 </div>
@@ -51,7 +55,8 @@
 
         <section class="container product text-center py-3">
             <h3>SẢN PHẨM TƯƠNG TỰ</h3>
-            <div style="height: 5px; width: 50%; background-color: rgb(0,119,132); display: inline-block;" class="m-auto"></div>
+            <div style="height: 5px; width: 50%; background-color: rgb(0,119,132); display: inline-block;"
+                class="m-auto"></div>
             <div class="row">
                 <div th:each="similarProduct : ${similarProducts}" class="col-md-3 pt-2">
                     <div class="p-2">
@@ -68,7 +73,9 @@
                                 <span><i class="bi bi-star-fill"></i></span>
                                 <span><i class="bi bi-star-fill"></i></span>
                             </div>
-                            <h5 th:text="${#numbers.formatDecimal(similarProduct.price, 0, 'POINT', 2, 'COMMA')} + ' VND'"></h5>
+                            <h5
+                                th:text="${#numbers.formatDecimal(similarProduct.price, 0, 'POINT', 2, 'COMMA')} + ' VND'">
+                            </h5>
                         </div>
                     </div>
                 </div>

@@ -5,26 +5,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "[Order]")
+@Table(name = "Orders")
 public class Order implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderDetailId;
+    @Column(name = "OrderId")
+    private Long orderId;
 
     @ManyToOne
-    @JoinColumn(name = "productId", nullable = false)
-    private Product product;
+    @JoinColumn(name = "CustomerId", nullable = false)
+    private Customer customerid;
 
-    @ManyToOne
-    @JoinColumn(name = "orderId", nullable = false)
-    private Order order;
+    @Column(name = "OrderDate")
+    private Date orderDate;
 
-    private Integer quantity;
-    private Double price;
+    @Column(name = "Amount")
+    private Double amount;
+
+    @Column(name = "Status")
+    private Integer status;
 }
+

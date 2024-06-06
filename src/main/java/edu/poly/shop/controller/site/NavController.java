@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import edu.poly.shop.model.Account;
 import edu.poly.shop.model.Category;
 import edu.poly.shop.service.CategoryService;
 import edu.poly.shop.service.ProductService;
@@ -24,9 +25,15 @@ public class NavController {
 
     @ModelAttribute
     public void addLoggedInUserToModel(Model model, HttpServletRequest request) {
-        String loggedInUser = (String) SessionUtils.getAttribute(request, "loggedInUser");
+        Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
         model.addAttribute("loggedInUser", loggedInUser);
     }
+
+    // @ModelAttribute
+    // public void addLoggedInUserToModel(Model model, HttpServletRequest request) {
+    //     String loggedInUser = (String) SessionUtils.getAttribute(request, "loggedInUser");
+    //     model.addAttribute("loggedInUser", loggedInUser);
+    // }
 
     @ModelAttribute
     public String home(Model model, HttpServletRequest request) {

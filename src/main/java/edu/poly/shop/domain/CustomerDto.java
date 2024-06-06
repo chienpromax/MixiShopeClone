@@ -16,6 +16,7 @@ public class CustomerDto {
     private Integer customerId;
     private String fullName;
     private String phone;
+    private String email;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date registeredDate;
     private String tinh;

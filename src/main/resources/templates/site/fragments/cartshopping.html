@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+</head>
+<body>
+    <section th:fragment="cartshopping">        
+         <!-- cart-shopping -->
+         <div class="row cart-shopping">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><img width="60px" src="/image/DSC016343-768x919.jpg" alt="">
+                                </td>
+                                <td colspan="2">Áo phông Mixi logo – Đen <br>
+                                    <hr> <span>1x1 = 88.000đ</span>
+                                </td>
+                                <td><a href="" class="d-flex align-items-center"><i
+                                            class="bi bi-x-circle"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">Tổng số phụ: 88.000 ₫</h5>
+                    <hr>
+                    <div class="row">
+                        <button class="btn-Cart"><a th:href="@{/site/carts/cartdetail}">Xem giỏi
+                                hàng</a></button>
+                        <button class="btn-Cart2 mt-2"><a href="">Thanh toán</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

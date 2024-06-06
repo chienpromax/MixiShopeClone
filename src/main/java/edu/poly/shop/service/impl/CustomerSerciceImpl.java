@@ -21,6 +21,11 @@ public class CustomerSerciceImpl implements CustomerService{
 	public CustomerSerciceImpl(CustomerRepository customerRepository) {
 		this.customerRepository = customerRepository;
 	}
+
+	@Override
+    public Customer findByUsername(String username) {
+        return customerRepository.findByUsername(username);
+    }
 	
 	@Override
 	public List<Customer> findByFullNameContaining(String fullName) {

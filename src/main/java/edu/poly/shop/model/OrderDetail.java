@@ -15,16 +15,20 @@ public class OrderDetail implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderDetailId;
+    @Column(name = "OrderDetailId")
+    private Long orderDetailid;
 
     @ManyToOne
-    @JoinColumn(name = "productId", nullable = false)
-    private Product product;
+    @JoinColumn(name = "OrderId", nullable = false)
+    private Order orderid;
 
     @ManyToOne
-    @JoinColumn(name = "orderId", nullable = false)
-    private Order order;
+    @JoinColumn(name = "ProductId", nullable = false)
+    private Product productid;
 
+    @Column(name = "Quantity")
     private Integer quantity;
-    private Double price;
+
+    @Column(name = "UnitPrice")
+    private Double unitPrice;
 }

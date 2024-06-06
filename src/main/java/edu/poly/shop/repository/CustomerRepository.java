@@ -11,7 +11,11 @@ import edu.poly.shop.model.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+    
+    Customer findByUsername(String username);
+    
     List<Customer> findByFullNameContaining(String fullName);
     
     Page<Customer> findByFullNameContaining(String fullName, Pageable pageable);
+
 }
