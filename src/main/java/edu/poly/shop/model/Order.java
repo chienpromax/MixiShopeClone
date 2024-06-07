@@ -17,13 +17,17 @@ public class Order implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OrderId")
-    private Long orderId;
+    private Integer orderid;
+    
+    @Column(name = "CustomerId")
+    private Integer Customerid;
 
     @ManyToOne
-    @JoinColumn(name = "CustomerId", nullable = false)
-    private Customer customerid;
+    @JoinColumn(name = "CustomerId", referencedColumnName = "CustomerId", insertable = false, updatable = false)
+    private Customer customer;
 
     @Column(name = "OrderDate")
+    @Temporal(TemporalType.DATE)
     private Date orderDate;
 
     @Column(name = "Amount")

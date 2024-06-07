@@ -18,7 +18,7 @@ public class SubcribeController {
 
     @PostMapping("subscribe")
     public String subscribe(@RequestParam("email") String email, Model model) {
-        String to = "your-email@example.com"; 
+        String to = "xuanchient@gmail.com"; 
         String subject = "Người theo dõi";
         String text = "Có người mới theo giõi bạn với email: " + email;
         emailService.sendEmail(to, subject, text);

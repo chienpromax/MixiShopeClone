@@ -14,4 +14,6 @@ public class OrderDetailDto{
 	private int productid;
 	private int quantity;
 	private double unitPrice;
+
+	private Boolean isEdit = false;
 }

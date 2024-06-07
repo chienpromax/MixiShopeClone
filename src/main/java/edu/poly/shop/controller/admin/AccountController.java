@@ -57,27 +57,25 @@ public class AccountController {
 	}
 
 	@GetMapping("edit/{username}")
-	public ModelAndView edit(ModelMap model, @PathVariable("username") String
-	username) {
-	Optional<Account> opt = accountService.findById(username);
-	AccountDto dto = new AccountDto();
-	if (opt.isPresent()) {
-	Account entity = opt.get();
-	BeanUtils.copyProperties(entity, dto);
-	dto.setIsEdit(true);
-	model.addAttribute("account", dto);
-	return new ModelAndView("admin/accounts/addOrEdit", model);
-	}
-	model.addAttribute("message", "lỗi .");
-	return new ModelAndView("forward:/admin/accounts/searchpaginated", model);
+	public ModelAndView edit(ModelMap model, @PathVariable("username") String username) {
+		Optional<Account> opt = accountService.findById(username);
+		AccountDto dto = new AccountDto();
+		if (opt.isPresent()) {
+			Account entity = opt.get();
+			BeanUtils.copyProperties(entity, dto);
+			dto.setIsEdit(true);
+			model.addAttribute("account", dto);
+			return new ModelAndView("admin/accounts/addOrEdit", model);
+		}
+		model.addAttribute("message", "lỗi .");
+		return new ModelAndView("forward:/admin/accounts/searchpaginated", model);
 	}
 
 	@GetMapping("delete/{username}")
-	public ModelAndView delete(ModelMap model, @PathVariable("username") String
-	username) {
-	accountService.deleteById(username);
-	model.addAttribute("message", "Xóa thành công");
-	return new ModelAndView("forward:/admin/accounts/searchpaginated", model);
+	public ModelAndView delete(ModelMap model, @PathVariable("username") String username) {
+		accountService.deleteById(username);
+		model.addAttribute("message", "Xóa thành công");
+		return new ModelAndView("forward:/admin/accounts/searchpaginated", model);
 	}
 
 	@RequestMapping("")
@@ -89,37 +87,39 @@ public class AccountController {
 
 	@GetMapping("searchpaginated")
 	public String search(ModelMap model,
-	@RequestParam(name = "nameSearch", required = false) String name,
-	@RequestParam("page") Optional<Integer> page,
-	@RequestParam("size") Optional<Integer> size) {
-	int currentPage = page.orElse(1);
-	int pageSize = size.orElse(5);
-	Pageable pageable = PageRequest.of(currentPage-1, pageSize,
-	Sort.by("username"));
-	Page<Account> resultPage = accountService.findAll(pageable);
+			@RequestParam(name = "nameSearch", required = false) String name,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(5);
+		Pageable pageable = PageRequest.of(currentPage - 1, pageSize,
+				Sort.by("username"));
+		Page<Account> resultPage = accountService.findAll(pageable);
 
-	if (StringUtils.hasText(name)) {
-	resultPage = accountService.findByNameContaining(name, pageable);
-	model.addAttribute(name, name);
-	} else {
-	resultPage = accountService.findAll(pageable);
-	}
-	int totalPages = resultPage.getTotalPages();
-	if (totalPages > 0) {
-	int start = Math.max(1, currentPage - 2);
-	int end = Math.min(currentPage + 2, totalPages);
-	if (totalPages > 5) {
-	if (end == totalPages) start = end - 5;
-	else if (start == 1) end = start + 5;
-	}
-	List<Integer> pageNumbers = IntStream.rangeClosed(start, end)
-	.boxed()
-	.collect(Collectors.toList());
-	model.addAttribute("pageNumbers", pageNumbers);
-	}
+		if (StringUtils.hasText(name)) {
+			resultPage = accountService.findByNameContaining(name, pageable);
+			model.addAttribute(name, name);
+		} else {
+			resultPage = accountService.findAll(pageable);
+		}
+		int totalPages = resultPage.getTotalPages();
+		if (totalPages > 0) {
+			int start = Math.max(1, currentPage - 2);
+			int end = Math.min(currentPage + 2, totalPages);
+			if (totalPages > 5) {
+				if (end == totalPages)
+					start = end - 5;
+				else if (start == 1)
+					end = start + 5;
+			}
+			List<Integer> pageNumbers = IntStream.rangeClosed(start, end)
+					.boxed()
+					.collect(Collectors.toList());
+			model.addAttribute("pageNumbers", pageNumbers);
+		}
 
-	model.addAttribute("accountPage", resultPage);
-	return "admin/accounts/searchpaginated";
+		model.addAttribute("accountPage", resultPage);
+		return "admin/accounts/searchpaginated";
 	}
 
 }

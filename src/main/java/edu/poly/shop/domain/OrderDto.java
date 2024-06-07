@@ -2,6 +2,8 @@ package edu.poly.shop.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderDto {
 
-	private int orderid;
-	private Date orderDate;
-	private int customerid;
-	private double amount;
-	private short status;
+    private Integer orderid;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date orderDate;
+    private Integer customerid;
+    private double amount;
+    private Integer status;
+    
+    private Boolean isEdit = false;
 }
+
