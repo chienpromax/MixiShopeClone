@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 
 @Controller
-@RequestMapping("site")
+@RequestMapping("site/page")
 public class HomeController {
 
     @Autowired
@@ -36,31 +36,6 @@ public class HomeController {
         Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
         model.addAttribute("loggedInUser", loggedInUser);
 
-        return "site/home";
+        return "site/page/home";
     }
 }
-
-
-// @Controller
-// @RequestMapping("site")
-// public class HomeController {
-
-//     @Autowired
-//     private ProductService productService;
-
-//     @Autowired
-//     CategoryService categoryService;
-
-//     @RequestMapping("home")
-//     public String home(Model model, HttpServletRequest request) {
-//         List<Product> product = productService.findAll();
-//         if (product.size() > 12) {
-//             product = product.subList(0, 12);
-//         }
-//         model.addAttribute("products", product);
-//         String loggedInUser = (String) SessionUtils.getAttribute(request, "loggedInUser");
-//         model.addAttribute("loggedInUser", loggedInUser);
-
-//         return "site/home";
-//     }
-// }

@@ -23,6 +23,11 @@ public class OrderDetailImpl implements OrderDetailService{
 	}
 
 	@Override
+    public Page<OrderDetail> findByOrderid(Integer orderid, Pageable pageable) {
+        return orderDetailRepository.findByOrderid(orderid, pageable);
+    }
+
+	@Override
 	public <S extends OrderDetail> S save(S entity) {
 		return orderDetailRepository.save(entity);
 	}

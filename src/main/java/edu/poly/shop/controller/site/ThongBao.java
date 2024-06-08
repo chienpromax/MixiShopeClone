@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("site")
+@RequestMapping("site/page")
 public class ThongBao {
     
     @RequestMapping("thongBao")
     public String home() {
-        return "site/thongBao";
+        return "site/page/thongBao";
     }
     
 }

@@ -18,8 +18,18 @@
                 class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Customer</a>
             <a th:href="@{/admin/customers/searchpaginated}"
                 class="list-group-item list-group-item-action bg-transparent second-text fw-bold">info Customer</a>
-                <a th:href="@{/admin/orders/searchpaginated}"
-                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Order Detail</a>
+            <div class="dropdown ps-3">
+                <button class="btn bg-white dropdown-toggle list-group-item.active second-text fw-bold" type="button"
+                    id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    Order Manager
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                    <li><a th:href="@{/admin/orders/searchpaginated}"
+                            class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Order</a></li>
+                    <li><a th:href="@{/admin/orderdetails/searchpaginated}"
+                        class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Order detail</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </body>

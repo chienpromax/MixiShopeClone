@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import edu.poly.shop.model.Account;
 import edu.poly.shop.model.Category;
+import edu.poly.shop.model.OrderDetail;
 import edu.poly.shop.service.CategoryService;
+import edu.poly.shop.service.OrderDetailService;
 import edu.poly.shop.service.ProductService;
 import edu.poly.shop.utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,17 +25,21 @@ public class NavController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    OrderDetailService orderDetailService;
+
     @ModelAttribute
     public void addLoggedInUserToModel(Model model, HttpServletRequest request) {
         Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
         model.addAttribute("loggedInUser", loggedInUser);
     }
 
-    // @ModelAttribute
-    // public void addLoggedInUserToModel(Model model, HttpServletRequest request) {
-    //     String loggedInUser = (String) SessionUtils.getAttribute(request, "loggedInUser");
-    //     model.addAttribute("loggedInUser", loggedInUser);
-    // }
+    @ModelAttribute
+    public String cart(Model model) {
+        List<OrderDetail> list = orderDetailService.findAll();
+        model.addAttribute("orderdetails", list);
+        return "site/carts/cartshopping";
+    }
 
     @ModelAttribute
     public String home(Model model, HttpServletRequest request) {

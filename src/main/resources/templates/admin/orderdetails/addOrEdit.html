@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+</head>
+
+<body>
+    <div class="container-fluid px-4" layout:fragment="content">
+        <div class="row g-3 my-2">
+            <form th:action="@{/admin/orderdetails/addOrUpdate}" method="post" th:object="${orderdetail}">
+                <div class="mb-3">
+                    <div class="row bg-white border border-dark rounded p-2">
+                        <label for="" class="primary-text form-label fs-4 text-center">Create order</label>
+                        <hr>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">orderDetail ID</label>
+                            <input type="hidden" th:field="*{isEdit}"/> 
+                            <input th:field="*{orderDetailid}" type="number" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">order ID</label>
+                            <input th:field="*{orderid}" type="number" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">product id</label>
+                            <input th:field="*{productid}" type="number" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">quantity</label>
+                            <input th:field="*{quantity}" type="number" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">unitPrice</label>
+                            <input th:field="*{unitPrice}" type="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                            <span th:if="${orderdetail.isEdit}">Update</span>
+                            <span th:unless="${orderdetail.isEdit}">Save</span>
+                        </button>
+                        <a th:href="@{/admin/orderdetails/searchpaginated}" class="btn btn-primary" type="button">List</a>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

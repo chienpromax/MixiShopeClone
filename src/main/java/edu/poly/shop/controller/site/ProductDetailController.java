@@ -1,7 +1,6 @@
 package edu.poly.shop.controller.site;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,19 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.poly.shop.model.Account;
-import edu.poly.shop.model.Order;
-import edu.poly.shop.model.OrderDetail;
 import edu.poly.shop.model.Product;
 import edu.poly.shop.service.ProductService;
 import edu.poly.shop.utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("site")
+@RequestMapping("site/products")
 public class ProductDetailController {
 
     @Autowired
@@ -32,7 +28,7 @@ public class ProductDetailController {
 
     @RequestMapping("productdetail")
     public String requestMethodName() {
-        return "site/productdetail";
+        return "site/products/productdetail";
     }
 
     public List<Product> findRandomSimilarProducts(List<Product> similarProducts, int count) {
@@ -61,9 +57,9 @@ public class ProductDetailController {
             model.addAttribute("product", product);
             model.addAttribute("similarProducts", randomSimilarProducts);
         } else {
-            return "site/productdetail";
+            return "site/products/productdetail";
         }
-        return "site/productdetail";
+        return "site/products/productdetail";
     }
 
     @GetMapping("/addtocart/{productid}")
@@ -72,7 +68,7 @@ public class ProductDetailController {
         if (loggedInUser == null) {
             return "redirect:/site/accounts/login";
         }
-        return "redirect:/site/productdetail/" + productId; // Redirect back to product detail page
+        return "redirect:/site/products/productdetail/" + productId; // Redirect back to product detail page
     }
     
 }

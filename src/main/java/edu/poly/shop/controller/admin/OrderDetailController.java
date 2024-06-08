@@ -1,6 +1,5 @@
 package edu.poly.shop.controller.admin;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,88 +23,82 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import edu.poly.shop.domain.OrderDto;
-import edu.poly.shop.model.Customer;
-import edu.poly.shop.model.Order;
-import edu.poly.shop.service.OrderService;
+import edu.poly.shop.domain.OrderDetailDto;
+import edu.poly.shop.model.OrderDetail;
+import edu.poly.shop.service.OrderDetailService;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("admin/orders/")
-public class OrderController {
+@RequestMapping("admin/orderdetails/")
+public class OrderDetailController {
 
 	@Autowired
-	OrderService orderService;
+	OrderDetailService orderDetailService;
 
 	@GetMapping("add")
 	public String add(Model model) {
-		model.addAttribute("order", new OrderDto());
-		return "admin/orders/addOrEdit";
+		model.addAttribute("orderdetail", new OrderDetailDto());
+		return "admin/orderdetails/addOrEdit";
 	}
 
 	@PostMapping("addOrUpdate")
-	public ModelAndView addOrUpdate(ModelMap model, @Valid @ModelAttribute("order") OrderDto dto,
+	public ModelAndView addOrUpdate(ModelMap model, @Valid @ModelAttribute("orderdetail") OrderDetail dto,
 			BindingResult result) {
 		if (result.hasErrors()) {
-			return new ModelAndView("admin/orders/addOrEdit");
+			return new ModelAndView("admin/orderdetails/addOrEdit");
 		}
-		Order entity = new Order();
+		OrderDetail entity = new OrderDetail();
 		BeanUtils.copyProperties(dto, entity);
 
-		Customer customer = new Customer();
-		customer.setCustomerId(dto.getCustomerid());
-		entity.setCustomer(customer);
-
-		orderService.save(entity);
+		orderDetailService.save(entity);
 		model.addAttribute("message", "Thêm thành công");
-		return new ModelAndView("redirect:/admin/orders/searchpaginated", model);
+		return new ModelAndView("redirect:/admin/orderdetails/searchpaginated", model);
 	}
 
-	@GetMapping("edit/{orderid}")
-	public ModelAndView edit(ModelMap model, @PathVariable("orderid") Integer orderid) {
-		Optional<Order> opt = orderService.findById(orderid);
-		OrderDto dto = new OrderDto();
+	@GetMapping("edit/{orderDetailid}")
+	public ModelAndView edit(ModelMap model, @PathVariable("orderDetailid") Integer orderDetailid) {
+		Optional<OrderDetail> opt = orderDetailService.findById(orderDetailid);
+		OrderDetailDto dto = new OrderDetailDto();
 		if (opt.isPresent()) {
-			Order entity = opt.get();
+			OrderDetail entity = opt.get();
 			BeanUtils.copyProperties(entity, dto);
-			dto.setCustomerid(entity.getCustomer().getCustomerId()); // Thêm dòng này để sao chép customerId
 			dto.setIsEdit(true);
-			model.addAttribute("order", dto);
-			return new ModelAndView("admin/orders/addOrEdit", model);
+			model.addAttribute("orderdetail", dto);
+			return new ModelAndView("admin/orderdetails/addOrEdit", model);
 		}
-		model.addAttribute("message", "Order not found.");
-		return new ModelAndView("forward:/admin/orders/searchpaginated", model);
+		model.addAttribute("message", "orderdetails not found.");
+		return new ModelAndView("forward:/admin/orderdetails/searchpaginated", model);
 	}
 
-	@GetMapping("delete/{orderid}")
-	public ModelAndView delete(ModelMap model, @PathVariable("orderid") Integer orderid) {
-		orderService.deleteById(orderid);
+	@GetMapping("delete/{orderDetailid}")
+	public ModelAndView delete(ModelMap model, @PathVariable("orderDetailid") Integer orderDetailid) {
+		orderDetailService.deleteById(orderDetailid);
 		model.addAttribute("message", "Xóa thành công");
-		return new ModelAndView("forward:/admin/orders/searchpaginated", model);
+		return new ModelAndView("forward:/admin/orderdetails/searchpaginated", model);
 	}
 
 	@RequestMapping("")
 	public String list(ModelMap model) {
-		List<Order> list = orderService.findAll();
-		model.addAttribute("orders", list);
-		return "admin/orders/list";
+		List<OrderDetail> list = orderDetailService.findAll();
+		model.addAttribute("orderdetails", list);
+		return "admin/orderdetails/list";
 	}
 
 	@GetMapping("searchpaginated")
 	public String search(ModelMap model,
-			@RequestParam(name = "dateSearch", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date orderDate,
+			@RequestParam(name = "orderid", required = false) Integer orderid,
 			@RequestParam("page") Optional<Integer> page,
 			@RequestParam("size") Optional<Integer> size) {
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(5);
-		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("orderDate"));
-		Page<Order> resultPage;
+		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("orderid"));
+		Page<OrderDetail> resultPage;
 
-		if (orderDate != null) {
-			resultPage = orderService.findByOrderDate(orderDate, pageable);
-			model.addAttribute("dateSearch", orderDate);
+		if (orderid != null) {
+			resultPage = orderDetailService.findByOrderid(orderid, pageable);
+			model.addAttribute("orderid", orderid);
 		} else {
-			resultPage = orderService.findAll(pageable);
+			resultPage = orderDetailService.findAll(pageable);
 		}
 
 		int totalPages = resultPage.getTotalPages();
@@ -125,8 +117,8 @@ public class OrderController {
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
 
-		model.addAttribute("orderPage", resultPage);
-		return "admin/orders/searchpaginated";
+		model.addAttribute("orderdetailPage", resultPage);
+		return "admin/orderdetails/searchpaginated";
 	}
 
 }

@@ -24,7 +24,7 @@
                 </div>
                 <div class="row pt-3">
                     <div class="col-lg-7 m-auto">
-                        <button class="btn-product"><a th:href="@{/site/allproducts}">XEM TẤT CẢ</a></button>
+                        <button class="btn-product"><a th:href="@{/site/products/allproduct}">XEM TẤT CẢ</a></button>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div th:each="product : ${products}" class="col-md-3 pt-2" data-aos="fade-up">
                     <div class="p-2">
                         <div class="card-body">
-                            <a th:href="@{/site/productdetail/{productid}(productid=${product.productid})}">
+                            <a th:href="@{/site/products/productdetail/{productid}(productid=${product.productid})}">
                                 <img th:src="@{'/uploads/' + ${product.image}}" class="img-fluid pb-2 mb-4" alt="" />
                             </a>
                             <p th:text="${product.category.name}"></p>

@@ -61,7 +61,7 @@
                 <div th:each="similarProduct : ${similarProducts}" class="col-md-3 pt-2">
                     <div class="p-2">
                         <div class="card-body">
-                            <a th:href="@{/site/productdetail/{productid}(productid=${similarProduct.productid})}">
+                            <a th:href="@{/site/products/productdetail/{productid}(productid=${similarProduct.productid})}">
                                 <img th:src="@{'/uploads/' + ${similarProduct.image}}" class="img-fluid pb-3" alt="" />
                             </a>
                             <p th:text="${similarProduct.category.name}"></p>

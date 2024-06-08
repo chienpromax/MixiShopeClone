@@ -41,7 +41,7 @@
                 <div class="col-md-3">
                     <h5 style="font-size: 1.3rem;">LỌC THEO GIÁ</h5>
                     <div class="mb-4 pb-2">
-                        <form th:action="@{/site/allproducts}" method="GET">
+                        <form th:action="@{/site/products/allproduct}" method="GET">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="minPrice" class="form-label">Thấp nhất</label>
@@ -61,7 +61,7 @@
                     <hr>
                     <h5 style="font-size: 1.3rem;">Tìm sản phẩm</h5>
                     <div class="mb-4 pb-2">
-                        <form th:action="@{/site/allproducts}" method="GET">
+                        <form th:action="@{/site/products/allproduct}" method="GET">
                             <div class="row">
                                 <label class="form-label">Tên sản phẩm</label>
                                 <input type="text" class="form-control" name="searchQuery"
@@ -79,7 +79,7 @@
                         <li class="nav-item">
                             <div th:each="category : ${categories}">
                                 <a class="dropdown-item nav-link"
-                                    th:href="@{/site/doanhmuc/{categoryid}(categoryid=${category.categoryid})}">
+                                    th:href="@{/site/page/doanhmuc/{categoryid}(categoryid=${category.categoryid})}">
                                     <span th:text="${category.name}"></span>
                                 </a>
                             </div>
@@ -91,7 +91,7 @@
                         <div th:each="product, iterStat : ${products}" class="col-md-4 pt-2">
                             <div class="p-2">
                                 <div class="card-body">
-                                    <a th:href="@{/site/productdetail/{productid}(productid=${product.productid})}">
+                                    <a th:href="@{/site/products/productdetail/{productid}(productid=${product.productid})}">
                                         <img th:src="@{'/uploads/' + ${product.image}}" class="img-fluid pb-2 mb-4"
                                             alt="" />
                                     </a>
@@ -114,7 +114,7 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination d-flex justify-content-center">
                             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                                <a class="page-link" th:href="@{'/site/allproducts?page=0&sortOrder=' + ${sortOrder}}"
+                                <a class="page-link" th:href="@{'/site/products/allproduct?page=0&sortOrder=' + ${sortOrder}}"
                                     aria-label="First">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -122,12 +122,12 @@
                             <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}"
                                 th:classappend="${pageNum == currentPage} ? 'active'">
                                 <a class="page-link"
-                                    th:href="@{'/site/allproducts?page=' + ${pageNum} + '&sortOrder=' + ${sortOrder}}"
+                                    th:href="@{'/site/products/allproduct?page=' + ${pageNum} + '&sortOrder=' + ${sortOrder}}"
                                     th:text="${pageNum + 1}"></a>
                             </li>
                             <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
                                 <a class="page-link"
-                                    th:href="@{'/site/allproducts?page=' + ${totalPages - 1} + '&sortOrder=' + ${sortOrder}}"
+                                    th:href="@{'/site/products/allproduct?page=' + ${totalPages - 1} + '&sortOrder=' + ${sortOrder}}"
                                     aria-label="Last">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
