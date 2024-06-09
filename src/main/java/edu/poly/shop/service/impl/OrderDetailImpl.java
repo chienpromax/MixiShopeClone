@@ -1,31 +1,94 @@
 package edu.poly.shop.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import edu.poly.shop.domain.OrderDetailDto;
 import edu.poly.shop.model.OrderDetail;
+import edu.poly.shop.model.Product;
 import edu.poly.shop.repository.OrderDetailRepository;
+import edu.poly.shop.repository.ProductRepository;
 import edu.poly.shop.service.OrderDetailService;
+import jakarta.persistence.EntityManager;
 
 @Service
-public class OrderDetailImpl implements OrderDetailService{
+public class OrderDetailImpl implements OrderDetailService {
 
-	OrderDetailRepository orderDetailRepository;
+	@Autowired
+	private OrderDetailRepository orderDetailRepository;
 
-	public OrderDetailImpl(OrderDetailRepository orderDetailRepository) {
-		this.orderDetailRepository = orderDetailRepository;
+	@Autowired
+	private ProductRepository productRepository;
+
+	@Autowired
+	private EntityManager entityManager;
+
+	@Override
+	public List<OrderDetailDto> findAllOrderDetailsWithProductsByUsername(String username) {
+		List<OrderDetail> orderDetails = orderDetailRepository.findByUsername(username);
+		List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
+
+		for (OrderDetail orderDetail : orderDetails) {
+			OrderDetailDto dto = new OrderDetailDto();
+			BeanUtils.copyProperties(orderDetail, dto);
+
+			Optional<Product> productOpt = productRepository.findById(orderDetail.getProductid());
+			if (productOpt.isPresent()) {
+				Product product = productOpt.get();
+				dto.setProduct(product);
+				dto.setProductName(product.getName());
+				dto.setProductImage(product.getImage());
+				dto.setProductPrice(product.getPrice());
+			}
+
+			orderDetailDtos.add(dto);
+		}
+		return orderDetailDtos;
 	}
 
 	@Override
-    public Page<OrderDetail> findByOrderid(Integer orderid, Pageable pageable) {
-        return orderDetailRepository.findByOrderid(orderid, pageable);
-    }
+	public void increaseQuantity(Long orderDetailId) {
+		// Tìm orderDetail bằng ID
+		OrderDetail orderDetail = orderDetailRepository.getOne(orderDetailId, entityManager);
+
+		// Tăng số lượng sản phẩm lên 1
+		int newQuantity = orderDetail.getQuantity() + 1;
+
+		// Cập nhật số lượng mới
+		orderDetail.setQuantity(newQuantity);
+
+		// Lưu orderDetail đã thay đổi
+		orderDetailRepository.save(orderDetail);
+	}
+
+	@Override
+	public void decreaseOrRemove(Long orderDetailId) {
+		// Tìm orderDetail bằng ID
+		OrderDetail orderDetail = orderDetailRepository.getOne(orderDetailId, entityManager);
+
+		// Tăng số lượng sản phẩm lên 1
+		int newQuantity = orderDetail.getQuantity() - 1;
+
+		// Cập nhật số lượng mới
+		orderDetail.setQuantity(newQuantity);
+
+		// Lưu orderDetail đã thay đổi
+		orderDetailRepository.save(orderDetail);
+	}
+
+	@Override
+	public Page<OrderDetail> findByOrderid(Integer orderid, Pageable pageable) {
+		return orderDetailRepository.findByOrderid(orderid, pageable);
+	}
 
 	@Override
 	public <S extends OrderDetail> S save(S entity) {
@@ -141,8 +204,5 @@ public class OrderDetailImpl implements OrderDetailService{
 	public void deleteAll() {
 		orderDetailRepository.deleteAll();
 	}
-	
-	
 
-	
 }

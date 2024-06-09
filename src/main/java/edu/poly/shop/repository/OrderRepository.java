@@ -1,6 +1,7 @@
 package edu.poly.shop.repository;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,5 +12,8 @@ import edu.poly.shop.model.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
+    
     Page<Order> findByOrderDate(Date orderDate, Pageable pageable);
+
+    List<Order> findByCustomerUsername(String username);
 }

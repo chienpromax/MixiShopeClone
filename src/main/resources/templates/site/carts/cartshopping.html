@@ -6,90 +6,41 @@
 
 <body>
     <section th:fragment="cartshopping">
-        <!-- cart-shopping -->
         <div class="row cart-shopping">
             <div class="card">
                 <div class="table-responsive">
                     <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Order date</th>
-                                <th>Customer id</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
                         <tbody>
                             <tr th:each="orderdetail : ${orderdetails}">
-                                <td th:text="${orderdetail.orderDetailid}"></td>
-                                <td th:text="${orderdetail.orderid}"></td>
-                                <td th:text="${orderdetail.productid}"></td>
-                                <td th:text="${orderdetail.quantity}"></td>
-                                <td th:text="${orderdetail.unitPrice}"></td>
-                                <!-- <td>
-                                    <a th:href="@{'/admin/orderdetails/edit/' + ${orderdetail.orderDetailid}}" class="btn btn-primary"
-                                        type="button">edit</a> |
-                                    <a th:href="@{'/admin/orderdetails/delete/' + ${orderdetail.orderDetailid}}" class="btn btn-primary"
-                                        type="button">delete</a>
-                                </td> -->
-                            </tr>
-                            <tr>
                                 <td>
-                                    <img width="60px" src="/image/DSC016343-768x919.jpg" alt="">
+                                    <img width="60px" th:src="@{'/uploads/' + ${orderdetail.productImage}}" alt="">
                                 </td>
-                                <td colspan="2">Áo phông Mixi logo – Đen <br>
-                                    <hr> <span>1x1 = 88.000đ</span>
+                                <td>
+                                    <span th:text="${orderdetail.productName}"></span><br>
+                                    <hr>
+                                    <span th:text="${orderdetail.quantity}"></span> x <span th:text="${orderdetail.productPrice}"></span>₫ <br> 
+                                    = <span th:text="${#numbers.formatDecimal(orderdetail.quantity * orderdetail.productPrice, 1, 'COMMA', 2, 'POINT')}"></span> ₫
                                 </td>
-                                <td><a href="" class="d-flex align-items-center"><i class="bi bi-x-circle"></i></a></td>
+                                <td>
+                                    <a href="#" class="d-flex align-items-center"><i class="bi bi-x-circle"></i></a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title text-center">Tổng số phụ: 88.000 ₫</h5>
+                    <h5 class="card-title text-center">
+                        Tổng tiền thu: <span th:text="${#numbers.formatDecimal(totalRevenue, 1, 'COMMA', 2, 'POINT')}"></span> ₫
+                    </h5>                    
                     <hr>
                     <div class="row">
-                        <button class="btn-Cart"><a th:href="@{/site/carts/cartdetail}">Xem giỏi
-                                hàng</a></button>
+                        <button class="btn-Cart"><a th:href="@{/site/carts/cartdetail}">Xem giỏ hàng</a></button>
                         <button class="btn-Cart2 mt-2"><a href="">Thanh toán</a></button>
                     </div>
                 </div>
-            </div>
+            </div>            
         </div>
     </section>
-
-    <!-- <section th:fragment="cartshopping">        
-         <div class="row cart-shopping">
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td><img width="60px" src="/image/DSC016343-768x919.jpg" alt="">
-                                </td>
-                                <td colspan="2">Áo phông Mixi logo – Đen <br>
-                                    <hr> <span>1x1 = 88.000đ</span>
-                                </td>
-                                <td><a href="" class="d-flex align-items-center"><i
-                                            class="bi bi-x-circle"></i></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Tổng số phụ: 88.000 ₫</h5>
-                    <hr>
-                    <div class="row">
-                        <button class="btn-Cart"><a th:href="@{/site/carts/cartdetail}">Xem giỏi
-                                hàng</a></button>
-                        <button class="btn-Cart2 mt-2"><a href="">Thanh toán</a></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 </body>
 
 </html>

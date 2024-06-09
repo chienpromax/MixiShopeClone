@@ -33,8 +33,12 @@ public class HomeController {
         }
         model.addAttribute("products", products);
         
-        Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
-        model.addAttribute("loggedInUser", loggedInUser);
+        // Kiểm tra xem loggedInUser có phải là một đối tượng Account hay không
+        Object loggedInUserObj = SessionUtils.getAttribute(request, "loggedInUser");
+        if (loggedInUserObj instanceof Account) {
+            Account loggedInUser = (Account) loggedInUserObj;
+            model.addAttribute("loggedInUser", loggedInUser);
+        }
 
         return "site/page/home";
     }

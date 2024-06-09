@@ -26,7 +26,7 @@ public class OrderDetail implements Serializable {
     private Order order; // Changed from "Order Order" to "Order order"
 
     @Column(name = "ProductId")
-    private Integer productid;
+    private Long  productid;
 
     @ManyToOne
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId", insertable = false, updatable = false)

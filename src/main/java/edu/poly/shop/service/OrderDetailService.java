@@ -8,11 +8,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import edu.poly.shop.domain.OrderDetailDto;
 import edu.poly.shop.model.OrderDetail;
 
 public interface OrderDetailService {
 
+	List<OrderDetailDto> findAllOrderDetailsWithProductsByUsername(String username);
+
 	Page<OrderDetail> findByOrderid(Integer orderid, Pageable pageable);
+
+	// Thêm phương thức tăng số lượng sản phẩm
+	void increaseQuantity(Long orderDetailId);
+
+	// Thêm phương thức giảm số lượng sản phẩm hoặc xóa sản phẩm
+	void decreaseOrRemove(Long orderDetailId);
 
 	void deleteAll();
 
@@ -60,5 +69,4 @@ public interface OrderDetailService {
 
 	<S extends OrderDetail> S save(S entity);
 
-	
 }
