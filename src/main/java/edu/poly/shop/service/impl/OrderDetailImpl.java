@@ -29,9 +29,6 @@ public class OrderDetailImpl implements OrderDetailService {
 	@Autowired
 	private ProductRepository productRepository;
 
-	@Autowired
-	private EntityManager entityManager;
-
 	@Override
 	public List<OrderDetailDto> findAllOrderDetailsWithProductsByUsername(String username) {
 		List<OrderDetail> orderDetails = orderDetailRepository.findByUsername(username);
@@ -56,35 +53,33 @@ public class OrderDetailImpl implements OrderDetailService {
 	}
 
 	@Override
-	public void increaseQuantity(Long orderDetailId) {
-		// Tìm orderDetail bằng ID
-		OrderDetail orderDetail = orderDetailRepository.getOne(orderDetailId, entityManager);
+    public void increaseQuantity(Integer orderDetailId) {
+        Optional<OrderDetail> orderDetailOptional = orderDetailRepository.findById(orderDetailId);
+        if (orderDetailOptional.isPresent()) {
+            OrderDetail orderDetail = orderDetailOptional.get();
+            orderDetail.setQuantity(orderDetail.getQuantity() + 1);
+            orderDetailRepository.save(orderDetail);
+        }
+    }
 
-		// Tăng số lượng sản phẩm lên 1
-		int newQuantity = orderDetail.getQuantity() + 1;
+    @Override
+    public void decreaseQuantity(Integer orderDetailId) {
+        Optional<OrderDetail> orderDetailOptional = orderDetailRepository.findById(orderDetailId);
+        if (orderDetailOptional.isPresent()) {
+            OrderDetail orderDetail = orderDetailOptional.get();
+            if (orderDetail.getQuantity() > 1) {
+                orderDetail.setQuantity(orderDetail.getQuantity() - 1);
+                orderDetailRepository.save(orderDetail);
+            } else {
+                orderDetailRepository.delete(orderDetail);
+            }
+        }
+    }
 
-		// Cập nhật số lượng mới
-		orderDetail.setQuantity(newQuantity);
-
-		// Lưu orderDetail đã thay đổi
-		orderDetailRepository.save(orderDetail);
-	}
-
-	@Override
-	public void decreaseOrRemove(Long orderDetailId) {
-		// Tìm orderDetail bằng ID
-		OrderDetail orderDetail = orderDetailRepository.getOne(orderDetailId, entityManager);
-
-		// Tăng số lượng sản phẩm lên 1
-		int newQuantity = orderDetail.getQuantity() - 1;
-
-		// Cập nhật số lượng mới
-		orderDetail.setQuantity(newQuantity);
-
-		// Lưu orderDetail đã thay đổi
-		orderDetailRepository.save(orderDetail);
-	}
-
+    @Override
+    public void removeProduct(Integer orderDetailId) {
+        orderDetailRepository.deleteById(orderDetailId);
+    }
 	@Override
 	public Page<OrderDetail> findByOrderid(Integer orderid, Pageable pageable) {
 		return orderDetailRepository.findByOrderid(orderid, pageable);

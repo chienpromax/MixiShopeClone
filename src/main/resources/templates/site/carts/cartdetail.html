@@ -19,19 +19,23 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">SẢN PHẨM</th>
-                                        <th scope="col">GIÁ</th>
-                                        <th scope="col">SỐ LƯỢNG</th>
-                                        <th scope="col">TẠM TÍNH</th>
-                                        <th scope="col">Hành động</th>
+                                        <th class="text-center">SẢN PHẨM</th>
+                                        <th class="text-center">Tên sp</th>
+                                        <th class="text-center">GIÁ</th>
+                                        <th class="text-center">SỐ LƯỢNG</th>
+                                        <th class="text-center">TẠM TÍNH</th>
+                                        <th class="text-center">Hành động</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="text-center">
                                     <tr th:each="orderDetail, stat : ${orderdetails}">
                                         <td>
                                             <img width="100px" th:src="@{'/uploads/' + ${orderDetail.productImage}}"
                                                 class="img-fluid rounded-top">
+                                        </td>
+                                        <td style="max-width: 150px;">
                                             <span th:text="${orderDetail.productName}"></span>
+
                                         </td>
                                         <td
                                             th:text="${#numbers.formatDecimal(orderDetail.productPrice, 1, 'COMMA', 2, 'POINT')}">
@@ -42,21 +46,10 @@
                                         <td
                                             th:text="${#numbers.formatDecimal(orderDetail.quantity * orderDetail.productPrice, 1, 'COMMA', 2, 'POINT')}">
                                         </td>
-                                        <td class="d-flex">
-                                            <form action="/site/carts/add" method="post">
-                                                <input type="hidden" name="orderDetailid"
-                                                    th:value="${orderDetail.orderDetailid}" />
-                                                <button type="submit" class="btn btn-link">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </button>
-                                            </form>
-                                            <form action="/site/carts/remove" method="post">
-                                                <input type="hidden" name="orderDetailid"
-                                                    th:value="${orderDetail.orderDetailid}" />
-                                                <button type="submit" class="btn btn-link">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
+                                        <td class="d-flex justify-content-center">
+                                            <a class="px-3" th:href="@{'/site/carts/increase/' + ${orderDetail.orderDetailid}}"><i class="fa-solid fa-plus"></i></a>
+                                            <a class="px-3" th:href="@{'/site/carts/decrease/' + ${orderDetail.orderDetailid}}"><i class="fa-solid fa-minus"></i></a>
+                                            <a class="px-3" th:href="@{'/site/carts/remove/' + ${orderDetail.orderDetailid}}"><i class="fa-solid fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -65,18 +58,17 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-center">
                         <button class="btn-Cart"><a th:href="@{/site/products/allproduct}">Mua tiếp</a></button>
-                        <button class="btn-Cart mx-2"><a href="">Cập nhật</a></button>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">CỘNG GIỎ HÀNG</h4>
-                            <p class="card-text">Tổng tiền: <span class=""
+                            <p class="card-text py-3">Tổng tiền: <span class=""
                                     th:text="${#numbers.formatDecimal(totalRevenue, 1, 'COMMA', 2, 'POINT')}"></span> ₫
                             </p>
                             <div class="row">
-                                <button class="btn-Cart"><a href="check-detail.html">Thanh toán</a></button>
+                                <button class="btn-Cart"><a th:href="@{/site/carts/checkdetail}">Thanh toán</a></button>
                             </div>
                         </div>
                     </div>

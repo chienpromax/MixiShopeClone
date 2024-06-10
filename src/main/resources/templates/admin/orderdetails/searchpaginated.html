@@ -11,7 +11,7 @@
             <div class="table-responsive">
                 <div class="card mb-2">
                     <div class="card-body text-center">
-                        <h2 class="text-primary">Danh sách order</h2>
+                        <h2 class="text-primary">Danh sách orderdetails</h2>
                         <i th:text="${message}" style="color: red; font-size: 1.3rem; font-weight: 500;"></i>
                     </div>
                     <div class="row m-2 mb-2 pb-3">
@@ -32,7 +32,7 @@
                 <div class="row" th:if="${!orderdetailPage.hasContent()}">
                     <div class="col">
                         <div class="alert alert-danger" role="alert">
-                            <strong>No orders Found</strong>
+                            <strong>No orderdetails Found</strong>
                         </div>
                     </div>
                 </div>
@@ -83,20 +83,20 @@
                             <ul class="pagination d-flex justify-content-center">
                                 <li th:classappend="${1 == orderdetailPage.number + 1} ? 'page-item active' : 'page-item'">
                                     <a class="page-link"
-                                        th:href="@{/admin/orders/searchpaginated(dateSearch=${dateSearch}, size=${orderdetailPage.size}, page=${1})}">
+                                        th:href="@{/admin/orderdetails/searchpaginated(dateSearch=${dateSearch}, size=${orderdetailPage.size}, page=${1})}">
                                         First
                                     </a>
                                 </li>
                                 <li class="page-item" th:each="pageNumber : ${pageNumbers}"
                                     th:classappend="${pageNumber == orderdetailPage.number + 1} ? ' active' : ''">
                                     <a class="page-link"
-                                        th:href="@{/admin/orders/searchpaginated(dateSearch=${dateSearch}, size=${orderdetailPage.size}, page=${pageNumber})}"
+                                        th:href="@{/admin/orderdetails/searchpaginated(dateSearch=${dateSearch}, size=${orderdetailPage.size}, page=${pageNumber})}"
                                         th:text="${pageNumber}">1</a>
                                 </li>
                                 <li
                                     th:classappend="${orderdetailPage.totalPages == orderdetailPage.number + 1} ? 'page-item active' : 'page-item'">
                                     <a class="page-link"
-                                        th:href="@{/admin/orders/searchpaginated(dateSearch=${dateSearch}, size=${orderdetailPage.size}, page=${orderdetailPage.totalPages})}">
+                                        th:href="@{/admin/orderdetails/searchpaginated(dateSearch=${dateSearch}, size=${orderdetailPage.size}, page=${orderdetailPage.totalPages})}">
                                         Last
                                     </a>
                                 </li>

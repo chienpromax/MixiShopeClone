@@ -50,11 +50,11 @@
                     </thead>
                     <tbody>
                         <tr th:each="order : ${orderPage.content}">
-                            <td th:text="${order.orderid}">1</td>
-                            <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}">2023-01-01</td>
+                            <td th:text="${order.orderid}"></td>
+                            <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}"></td>
                             <td th:text="${order.customerid}"></td>
-                            <td th:text="${order.amount}">100.0</td>
-                            <td th:text="${order.status}">Pending</td>
+                            <td th:text="${order.amount}"></td>
+                            <td th:text="${order.status}"></td>
                             <td>
                                 <a th:href="@{'/admin/orders/edit/' + ${order.orderid}}" class="btn btn-primary"
                                     type="button">edit</a> |

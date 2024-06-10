@@ -17,11 +17,11 @@ public interface OrderDetailService {
 
 	Page<OrderDetail> findByOrderid(Integer orderid, Pageable pageable);
 
-	// Thêm phương thức tăng số lượng sản phẩm
-	void increaseQuantity(Long orderDetailId);
+	void increaseQuantity(Integer orderDetailId);
 
-	// Thêm phương thức giảm số lượng sản phẩm hoặc xóa sản phẩm
-	void decreaseOrRemove(Long orderDetailId);
+    void decreaseQuantity(Integer orderDetailId);
+
+    void removeProduct(Integer orderDetailId);
 
 	void deleteAll();
 

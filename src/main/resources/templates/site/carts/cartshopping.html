@@ -8,7 +8,7 @@
     <section th:fragment="cartshopping">
         <div class="row cart-shopping">
             <div class="card">
-                <div class="table-responsive">
+                <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
                     <table class="table">
                         <tbody>
                             <tr th:each="orderdetail : ${orderdetails}">
@@ -22,7 +22,7 @@
                                     = <span th:text="${#numbers.formatDecimal(orderdetail.quantity * orderdetail.productPrice, 1, 'COMMA', 2, 'POINT')}"></span> ₫
                                 </td>
                                 <td>
-                                    <a href="#" class="d-flex align-items-center"><i class="bi bi-x-circle"></i></a>
+                                    <a class="d-flex align-items-center" th:href="@{'/site/carts/remove/' + ${orderdetail.orderDetailid}}"><i class="bi bi-x-circle"></i></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -35,7 +35,7 @@
                     <hr>
                     <div class="row">
                         <button class="btn-Cart"><a th:href="@{/site/carts/cartdetail}">Xem giỏ hàng</a></button>
-                        <button class="btn-Cart2 mt-2"><a href="">Thanh toán</a></button>
+                        <button class="btn-Cart2 mt-2"><a th:href="@{/site/carts/checkdetail}">Thanh toán</a></button>
                     </div>
                 </div>
             </div>            

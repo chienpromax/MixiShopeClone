@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,22 +12,76 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import edu.poly.shop.model.Order;
+import edu.poly.shop.model.OrderDetail;
+import edu.poly.shop.model.Product;
+import edu.poly.shop.repository.OrderDetailRepository;
 import edu.poly.shop.repository.OrderRepository;
+import edu.poly.shop.repository.ProductRepository;
 import edu.poly.shop.service.OrderService;
 
 @Service
-public class OrderImpl implements OrderService{
-
+public class OrderImpl implements OrderService {
+	
+	@Autowired
 	OrderRepository orderRepository;
+	@Autowired
+	ProductRepository productRepository;
+	@Autowired
+	OrderDetailRepository orderDetailRepository;
 
 	public OrderImpl(OrderRepository orderRepository) {
 		this.orderRepository = orderRepository;
 	}
+
+	// thêm sản phẩm vào giở
+	@Override
+    public void addProductToCart(Integer customerId, Long productId) {
+        Order order = orderRepository.findPendingOrderByCustomerId(customerId);
+
+        if (order == null) {
+            order = new Order();
+            order.setCustomerid(customerId);
+            order.setOrderDate(new Date());
+            order.setAmount(0.0);
+            order.setStatus(0); // Giả định 0 là trạng thái chưa thanh toán
+            orderRepository.save(order);
+        }
+
+        // Kiểm tra xem sản phẩm đã tồn tại trong đơn hàng chưa
+        Optional<OrderDetail> existingOrderDetailOpt = orderDetailRepository.findOneByOrderidAndProductid(order.getOrderid(), productId);
+        if (existingOrderDetailOpt.isPresent()) {
+            // Nếu sản phẩm đã tồn tại trong đơn hàng, chỉ cần cập nhật số lượng
+            OrderDetail existingOrderDetail = existingOrderDetailOpt.get();
+            existingOrderDetail.setQuantity(existingOrderDetail.getQuantity() + 1);
+            orderDetailRepository.save(existingOrderDetail);
+
+            // Cập nhật tổng tiền đơn hàng
+            double totalPrice = existingOrderDetail.getUnitPrice() * existingOrderDetail.getQuantity();
+            order.setAmount(order.getAmount() + totalPrice);
+            orderRepository.save(order);
+        } else {
+            // Nếu sản phẩm chưa tồn tại trong đơn hàng, thêm mới
+            Optional<Product> productOpt = productRepository.findById(productId);
+            if (productOpt.isPresent()) {
+                Product product = productOpt.get();
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setOrderid(order.getOrderid());
+                orderDetail.setProductid(productId);
+                orderDetail.setQuantity(1); // Giả định mỗi lần thêm 1 sản phẩm
+                orderDetail.setUnitPrice(product.getPrice());
+                orderDetailRepository.save(orderDetail);
+
+                // Cập nhật tổng tiền đơn hàng
+                order.setAmount(order.getAmount() + product.getPrice());
+                orderRepository.save(order);
+            }
+        }
+    }
 	
 	@Override
 	public Page<Order> findByOrderDate(Date orderDate, Pageable pageable) {
-        return orderRepository.findByOrderDate(orderDate, pageable);
-    }
+		return orderRepository.findByOrderDate(orderDate, pageable);
+	}
 
 	@Override
 	public <S extends Order> S save(S entity) {
@@ -147,7 +202,5 @@ public class OrderImpl implements OrderService{
 	public void deleteAll() {
 		orderRepository.deleteAll();
 	}
-	
-	
-	
+
 }

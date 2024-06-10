@@ -13,6 +13,9 @@ import edu.poly.shop.model.Order;
 
 public interface OrderService {
 
+	//thêm giỏ hàng
+	void addProductToCart(Integer customerid, Long productid);
+
 	Page<Order> findByOrderDate(Date orderDate, Pageable pageable);
 
 	void deleteAll();

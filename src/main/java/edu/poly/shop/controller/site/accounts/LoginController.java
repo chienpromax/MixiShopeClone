@@ -1,4 +1,4 @@
-package edu.poly.shop.controller.site;
+package edu.poly.shop.controller.site.accounts;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,27 +55,6 @@ public class LoginController {
             return "site/accounts/login";
         }
     }
-    
-    // @PostMapping("login")
-    // public String login(HttpServletRequest request, HttpServletResponse response, Model model,
-    //                     @RequestParam("username") String username, @RequestParam("password") String password) {
-    //     Optional<Account> accountOptional = accountService.findById(username);
-    //     if (accountOptional.isPresent() && accountOptional.get().getPassword().equals(password)) {
-    //         Account account = accountOptional.get();
-    //         // Clear previous session attribute if exists
-    //         SessionUtils.removeAttribute(request, "loggedInUser");
-    //         // Save to session
-    //         SessionUtils.setAttribute(request, "loggedInUser", account);
-    //         // Save to cookie
-    //         CookieUtils.addCookie(response, "loggedInUser", username, 24 * 60 * 60);
-    
-    //         return "redirect:/site/page/home";
-    //     } else {
-    //         model.addAttribute("message", "username or password failed");
-    //         model.addAttribute("user", new AccountDto());
-    //         return "site/accounts/login";
-    //     }
-    // }
 
     @RequestMapping("login")
     public String home(Model model, HttpServletRequest request) {

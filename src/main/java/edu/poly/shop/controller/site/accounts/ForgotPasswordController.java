@@ -1,4 +1,4 @@
-package edu.poly.shop.controller.site;
+package edu.poly.shop.controller.site.accounts;
 
 import java.util.Optional;
 

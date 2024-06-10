@@ -14,10 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.poly.shop.model.Account;
+import edu.poly.shop.model.Customer;
 import edu.poly.shop.model.Product;
+import edu.poly.shop.service.CustomerService;
+import edu.poly.shop.service.OrderService;
 import edu.poly.shop.service.ProductService;
 import edu.poly.shop.utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
+
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("site/products")
@@ -26,9 +31,34 @@ public class ProductDetailController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    CustomerService customerService;
+
+    @Autowired
+    OrderService orderService;;
+
     @RequestMapping("productdetail")
     public String requestMethodName() {
         return "site/products/productdetail";
+    }
+    
+    @PostMapping("addtocart/{productId}")
+    public String addToCart(@PathVariable("productId") Long productId, HttpServletRequest request, Model model) {
+        // Kiểm tra đăng nhập
+        Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/site/accounts/login";
+        }
+        // Lấy thông tin khách hàng
+        String username = loggedInUser.getUsername();
+        Customer customer = customerService.findByUsername(username);
+        if (customer == null) {
+            return "redirect:/site/carts/checkdetail";
+        }
+        // Thêm sản phẩm vào giỏ hàng
+        orderService.addProductToCart(customer.getCustomerId(), productId);
+
+        return "redirect:/site/carts/cartdetail"; // Chuyển hướng tới trang giỏ hàng
     }
 
     public List<Product> findRandomSimilarProducts(List<Product> similarProducts, int count) {
@@ -61,14 +91,4 @@ public class ProductDetailController {
         }
         return "site/products/productdetail";
     }
-
-    @GetMapping("/addtocart/{productid}")
-    public String addToCart(@PathVariable("productid") Long productId, HttpServletRequest request) {
-        Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/site/accounts/login";
-        }
-        return "redirect:/site/products/productdetail/" + productId; // Redirect back to product detail page
-    }
-    
 }

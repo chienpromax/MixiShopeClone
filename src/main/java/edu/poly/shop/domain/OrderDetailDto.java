@@ -13,7 +13,7 @@ public class OrderDetailDto {
 
     private int orderDetailid;
     private int orderid;
-    private int productid;
+    private Long productid;
     private int quantity;
     private double unitPrice;
 

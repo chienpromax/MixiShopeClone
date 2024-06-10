@@ -69,7 +69,7 @@ public class OrderController {
 		if (opt.isPresent()) {
 			Order entity = opt.get();
 			BeanUtils.copyProperties(entity, dto);
-			dto.setCustomerid(entity.getCustomer().getCustomerId()); // Thêm dòng này để sao chép customerId
+			dto.setCustomerid(entity.getCustomer().getCustomerId());
 			dto.setIsEdit(true);
 			model.addAttribute("order", dto);
 			return new ModelAndView("admin/orders/addOrEdit", model);

@@ -62,6 +62,7 @@ public class OrderDetailController {
 		if (opt.isPresent()) {
 			OrderDetail entity = opt.get();
 			BeanUtils.copyProperties(entity, dto);
+			dto.setProductid(entity.getProduct().getProductid());
 			dto.setIsEdit(true);
 			model.addAttribute("orderdetail", dto);
 			return new ModelAndView("admin/orderdetails/addOrEdit", model);
