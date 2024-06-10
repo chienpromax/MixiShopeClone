@@ -1,5 +1,5 @@
 
-package edu.poly.shop.controller.site;
+package edu.poly.shop.controller.site.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package edu.poly.shop.controller.site;
+package edu.poly.shop.controller.site.carts;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.poly.shop.model.Account;
 import edu.poly.shop.model.Customer;
+import edu.poly.shop.model.Order;
 import edu.poly.shop.service.CustomerService;
+import edu.poly.shop.service.OrderService;
 import edu.poly.shop.utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,6 +24,9 @@ public class CheckDetailController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("checkdetail")
     public String showCheckDetail(Model model, HttpServletRequest request) {
@@ -45,6 +51,16 @@ public class CheckDetailController {
             customer.setUsername(loggedInUser.getUsername());
             // Lưu thông tin khách hàng
             customerService.save(customer);
+        }
+        return "redirect:/site/carts/checkdetail";
+    }
+
+    @PostMapping("placeorder")
+    public String placeOrder(@RequestParam("customerId") Integer customerId) {
+        Order pendingOrder = orderService.findPendingOrderByCustomerId(customerId);
+        if (pendingOrder != null) {
+            pendingOrder.setStatus(1); // Cập nhật trạng thái đơn hàng thành 1
+            orderService.save(pendingOrder);
         }
         return "redirect:/site/carts/checkdetail";
     }

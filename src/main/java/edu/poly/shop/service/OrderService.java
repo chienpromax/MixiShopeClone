@@ -13,6 +13,9 @@ import edu.poly.shop.model.Order;
 
 public interface OrderService {
 
+	// cập nhật giỏ hàng
+	Order findPendingOrderByCustomerId(Integer customerId);
+
 	//thêm giỏ hàng
 	void addProductToCart(Integer customerid, Long productid);
 

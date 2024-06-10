@@ -67,8 +67,8 @@
                             <p class="card-text py-3">Tổng tiền: <span class=""
                                     th:text="${#numbers.formatDecimal(totalRevenue, 1, 'COMMA', 2, 'POINT')}"></span> ₫
                             </p>
-                            <div class="row">
-                                <button class="btn-Cart"><a th:href="@{/site/carts/checkdetail}">Thanh toán</a></button>
+                            <div class="row d-flex justify-content-center">
+                                <button class="btn-Cart w-75"><a style="padding:0 50px 0 50px;" th:href="@{/site/carts/checkdetail}">Thanh toán</a></button>
                             </div>
                         </div>
                     </div>

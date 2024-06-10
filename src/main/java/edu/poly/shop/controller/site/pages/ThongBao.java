@@ -1,4 +1,4 @@
-package edu.poly.shop.controller.site;
+package edu.poly.shop.controller.site.pages;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

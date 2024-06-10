@@ -33,6 +33,11 @@ public class OrderImpl implements OrderService {
 		this.orderRepository = orderRepository;
 	}
 
+	@Override
+    public Order findPendingOrderByCustomerId(Integer customerId) {
+        return orderRepository.findPendingOrderByCustomerId(customerId);
+    }
+	
 	// thêm sản phẩm vào giở
 	@Override
     public void addProductToCart(Integer customerId, Long productId) {

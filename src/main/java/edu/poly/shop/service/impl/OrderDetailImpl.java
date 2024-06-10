@@ -13,12 +13,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import edu.poly.shop.domain.OrderDetailDto;
+import edu.poly.shop.model.Order;
 import edu.poly.shop.model.OrderDetail;
 import edu.poly.shop.model.Product;
 import edu.poly.shop.repository.OrderDetailRepository;
+import edu.poly.shop.repository.OrderRepository;
 import edu.poly.shop.repository.ProductRepository;
 import edu.poly.shop.service.OrderDetailService;
-import jakarta.persistence.EntityManager;
 
 @Service
 public class OrderDetailImpl implements OrderDetailService {
@@ -29,28 +30,33 @@ public class OrderDetailImpl implements OrderDetailService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+    private OrderRepository orderRepository; // Thêm phụ thuộc này
+
 	@Override
-	public List<OrderDetailDto> findAllOrderDetailsWithProductsByUsername(String username) {
-		List<OrderDetail> orderDetails = orderDetailRepository.findByUsername(username);
-		List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
+    public List<OrderDetailDto> findAllOrderDetailsWithProductsByUsername(String username) {
+        List<OrderDetail> orderDetails = orderDetailRepository.findByUsernameAndPendingStatus(username);
+        List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
 
-		for (OrderDetail orderDetail : orderDetails) {
-			OrderDetailDto dto = new OrderDetailDto();
-			BeanUtils.copyProperties(orderDetail, dto);
+        for (OrderDetail orderDetail : orderDetails) {
+            OrderDetailDto dto = new OrderDetailDto();
+            BeanUtils.copyProperties(orderDetail, dto);
 
-			Optional<Product> productOpt = productRepository.findById(orderDetail.getProductid());
-			if (productOpt.isPresent()) {
-				Product product = productOpt.get();
-				dto.setProduct(product);
-				dto.setProductName(product.getName());
-				dto.setProductImage(product.getImage());
-				dto.setProductPrice(product.getPrice());
-			}
+            Optional<Product> productOpt = productRepository.findById(orderDetail.getProductid());
+            if (productOpt.isPresent()) {
+                Product product = productOpt.get();
+                dto.setProduct(product);
+                dto.setProductName(product.getName());
+                dto.setProductImage(product.getImage());
+                dto.setProductPrice(product.getPrice());
+            }
 
-			orderDetailDtos.add(dto);
-		}
-		return orderDetailDtos;
-	}
+            orderDetailDtos.add(dto);
+        }
+        return orderDetailDtos;
+    }
+
+
 
 	@Override
     public void increaseQuantity(Integer orderDetailId) {

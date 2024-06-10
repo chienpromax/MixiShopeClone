@@ -1,4 +1,4 @@
-package edu.poly.shop.controller.site;
+package edu.poly.shop.controller.site.products;
 
 import java.util.Collections;
 import java.util.ArrayList;
