@@ -29,6 +29,4 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     Page<Order> findByOrderDateAndCustomerUsername(Date orderDate, String username, Pageable pageable);
 
-    // cập nhật status
-
 }

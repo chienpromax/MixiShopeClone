@@ -1,0 +1,68 @@
+<!-- <!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid px-4" layout:fragment="content">
+        <div class="container">
+            <h1>Revenue by Month</h1>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        // Lấy dữ liệu từ model và chuyển đổi thành JavaScript object
+        var items = /*[[${items}]]*/ [];
+        console.log(items);
+
+        // Tạo mảng chứa tháng và doanh thu
+        var months = items.map(function (item) {
+            return "Month " + item[0];
+        });
+
+        var revenues = items.map(function (item) {
+            return item[1];
+        });
+
+        // Lấy thẻ canvas để vẽ biểu đồ doanh thu
+        var ctx = document.getElementById("revenueChart").getContext("2d");
+
+        // Tạo biểu đồ cột cho doanh thu
+        var revenueChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: months,
+                datasets: [
+                    {
+                        label: "Total Revenue",
+                        data: revenues,
+                        backgroundColor: "rgba(75, 192, 192, 0.2)",
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 1,
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html> -->

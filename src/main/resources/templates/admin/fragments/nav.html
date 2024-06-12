@@ -7,41 +7,41 @@
 
 <body>
     <div class="bg-white" id="sidebar-wrapper" th:fragment="nav">
-        <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><a class="navbar-brand" th:href="@{/site/page/home}"><img width="100" height="60" src="/image/logo-mixi-tét.png"
+        <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><a class="navbar-brand" th:href="@{/admin/products/searchpaginated}"><img width="100" height="60" src="/image/logo-mixi-tét.png"
             alt=""></a></div>
         <div class="list-group list-group-flush my-3">
             <a th:href="@{/admin/products/searchpaginated}"
-                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Product</a>
+                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Sản phẩm</a>
             <a th:href="@{/admin/categories/searchpaginated}"
-                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Category</a>
+                class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Doanh mục</a>
             <div class="dropdown ps-3 pt-2 pb-4">
                 <button class="btn bg-white dropdown-toggle list-group-item.active second-text fw-bold" type="button"
                     id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                    customer Manager
+                    Quản lý người dùng
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                     <li><a th:href="@{/admin/accounts/searchpaginated}"
-                            class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Account</a>
+                            class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Tài khoản</a>
                     </li>
                     <li><a th:href="@{/admin/customers/searchpaginated}"
-                            class="list-group-item list-group-item-action bg-transparent second-text fw-bold">info
-                            Customer</a></li>
+                            class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Thông tin cá nhân</a></li>
                 </ul>
             </div>
             <div class="dropdown ps-3">
                 <button class="btn bg-white dropdown-toggle list-group-item.active second-text fw-bold" type="button"
                     id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                    Order Manager
+                    Quản lý đơn hàng
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                     <li><a th:href="@{/admin/orders/searchpaginated}"
-                            class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Order</a>
+                            class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Đơn hàng</a>
                     </li>
                     <li><a th:href="@{/admin/orderdetails/searchpaginated}"
-                            class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Order
-                            detail</a></li>
+                            class="list-group-item list-group-item-action bg-transparent second-text fw-bold">Chi tiết đơn hàng</a></li>
                 </ul>
             </div>
+            <a th:href="@{/admin/report/revenueCategory}"
+                class="list-group-item list-group-item-action bg-transparent second-text fw-bold pt-4">Thống kê</a>
         </div>
     </div>
 </body>
