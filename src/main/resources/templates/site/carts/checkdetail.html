@@ -62,13 +62,27 @@
                 <div class="col-md-5">
                     <div class="card check-detail-cart">
                         <div class="card-body">
-                            <h4 class="card-title">ĐƠN HÀNG CỦA BẠN</h4>
-                            <p class="card-text py-2">SẢN PHẨM <span class="float-end">TẠM TÍNH</span></p>
-                            <p class="card-text">Áo mixi-M x 1 <span class="float-end">88.000 đ</span></p>
-                            <p class="card-text">Tổng: <span class="float-end">88.000 đ</span></p>
+                            <h4 class="card-title text-center py-2">ĐƠN HÀNG CỦA BẠN</h4>
+                            <table class="table">
+                                <tbody>
+                                    <tr th:each="orderdetail : ${orderdetails}">
+                                        <td>
+                                            <img width="60px" th:src="@{'/uploads/' + ${orderdetail.productImage}}" alt="">
+                                        </td>
+                                        <td class="py-2" style="color: rgb(0,119,132); font-weight: 600;">Tên sản phẩm: <span th:text="${orderdetail.productName}"></span><br>
+                                            <hr>
+                                            Tổng tiền: 
+                                            <span th:text="${orderdetail.quantity}"></span> x <span th:text="${orderdetail.productPrice}"></span>₫
+                                            = <span th:text="${#numbers.formatDecimal(orderdetail.quantity * orderdetail.productPrice, 1, 'COMMA', 2, 'POINT')}"></span> ₫
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h5 class="card-title text-center" style="color: rgb(0,119,132); font-weight: 800;">
+                                Tổng tiền thu: <span th:text="${#numbers.formatDecimal(totalRevenue, 1, 'COMMA', 2, 'POINT')}"></span> ₫
+                            </h5> 
                             <p class="card-text py-2">Hoá đơn chưa kèm phí ship (Quý khách thanh toán bằng tiền mặt hoặc
-                                chuyển
-                                khoản theo yêu cầu với đơn hàng của shop).</p>
+                                chuyển khoản theo yêu cầu với đơn hàng của shop).</p>
                             <div class="form-check py-2">
                                 <input class="form-check-input" type="checkbox" value="" id="" checked />
                                 <label class="form-check-label" for=""> Tôi đã đọc và đồng ý với điều khoản và điều kiện
@@ -79,7 +93,8 @@
                                     <input type="hidden" th:value="${customer.customerId}" name="customerId"/>
                                     <button type="submit" class="btn-Cart w-75">Đặt hàng</button>
                                 </form>
-                            </div>                            
+                            </div>
+                                              
                             <p class="py-2">Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải
                                 nghiệm sử dụng website, và cho các mục đích cụ thể khác đã được mô tả trong chính sách
                                 riêng tư.</p>

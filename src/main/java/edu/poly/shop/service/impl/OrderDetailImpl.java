@@ -31,7 +31,7 @@ public class OrderDetailImpl implements OrderDetailService {
 	private ProductRepository productRepository;
 
 	@Autowired
-    private OrderRepository orderRepository; // Thêm phụ thuộc này
+    private OrderRepository orderRepository;
 
 	@Override
     public List<OrderDetailDto> findAllOrderDetailsWithProductsByUsername(String username) {

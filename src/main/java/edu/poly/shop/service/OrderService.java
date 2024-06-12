@@ -13,11 +13,19 @@ import edu.poly.shop.model.Order;
 
 public interface OrderService {
 
+	// hiển thị hóa đơn
+	List<Order> findByUsername(String username);
+    Page<Order> findByUsername(String username, Pageable pageable);
+    Page<Order> findByOrderDateAndUsername(Date orderDate, String username, Pageable pageable);
+
 	// cập nhật giỏ hàng
 	Order findPendingOrderByCustomerId(Integer customerId);
 
 	//thêm giỏ hàng
 	void addProductToCart(Integer customerid, Long productid);
+
+	 // cập nhật status
+	 void updateOrderStatus(Integer orderId, int status);
 
 	Page<Order> findByOrderDate(Date orderDate, Pageable pageable);
 
@@ -68,7 +76,4 @@ public interface OrderService {
 	<S extends Order> List<S> saveAll(Iterable<S> entities);
 
 	<S extends Order> S save(S entity);
-
-	
-	
 }

@@ -1,5 +1,7 @@
 package edu.poly.shop.controller.site.carts;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import edu.poly.shop.service.CustomerService;
 import edu.poly.shop.service.OrderService;
 import edu.poly.shop.utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -29,10 +32,11 @@ public class CheckDetailController {
     OrderService orderService;
 
     @GetMapping("checkdetail")
-    public String showCheckDetail(Model model, HttpServletRequest request) {
-        // Lấy thông tin người dùng đã đăng nhập
+    public String showCheckDetail(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
-        if (loggedInUser != null) {
+        if (loggedInUser == null) {
+            return "redirect:/site/accounts/login";
+        } else {
             // Lấy thông tin khách hàng đã đăng ký nếu có
             Customer customer = customerService.findByUsername(loggedInUser.getUsername());
             if (customer == null) {

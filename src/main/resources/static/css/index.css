@@ -1,7 +1,7 @@
 :root {
-  --main-bg-color: #cbe9de;
+  --main-bg-color: #dedad5;
   --main-text-color: #f98b32;
-  --second-text-color: #bbbec5;
+  --second-text-color: rgba(0, 133, 148, 0.745);
   --second-bg-color: #c1efde;
 }
 
@@ -29,11 +29,14 @@
   overflow-x: hidden;
   background-image: linear-gradient(
     to right,
-    #afebf5,
+    rgba(23, 149, 163, 0.745),
+    rgb(30, 172, 188),
+    rgb(103, 193, 203),
+    /* #afebf5,
     #d1f2f4,
-    #d3ebf3,
-    #e0f0f1,
-    #e8eef1
+    #d3ebf3, */
+    #a7e7ec,
+    #cae4f1
   );
 }
 

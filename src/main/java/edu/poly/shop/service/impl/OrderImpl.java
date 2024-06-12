@@ -37,6 +37,32 @@ public class OrderImpl implements OrderService {
     public Order findPendingOrderByCustomerId(Integer customerId) {
         return orderRepository.findPendingOrderByCustomerId(customerId);
     }
+
+	@Override
+    public void updateOrderStatus(Integer orderId, int status) {
+        Optional<Order> orderOpt = orderRepository.findById(orderId);
+        if (orderOpt.isPresent()) {
+            Order order = orderOpt.get();
+            order.setStatus(status);
+            orderRepository.save(order);
+        }
+    }
+
+	//hiển thị hóa đơn
+	@Override
+    public List<Order> findByUsername(String username) {
+        return orderRepository.findByCustomerUsername(username);
+    }
+
+    @Override
+    public Page<Order> findByUsername(String username, Pageable pageable) {
+        return orderRepository.findByCustomerUsername(username, pageable);
+    }
+
+    @Override
+    public Page<Order> findByOrderDateAndUsername(Date orderDate, String username, Pageable pageable) {
+        return orderRepository.findByOrderDateAndCustomerUsername(orderDate, username, pageable);
+    }
 	
 	// thêm sản phẩm vào giở
 	@Override

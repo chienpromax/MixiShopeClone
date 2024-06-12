@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{site/index.html}">
+
+<head>
+</head>
+
+<body>
+    <section class="container py-5" layout:fragment="main">
+        <div th:replace="~{site/fragments/steepaction :: steepaction}"></div>
+        <!-- thank customer -->
+        <section class="video" style="height: 350px;">
+            <div class="container d-flex justify-content-center align-items-center position-relative">
+                <img src="/image/domixi.jpg" alt="">
+                <div class="text-center position-absolute top-50 start-50 translate-middle">
+                    <img class="w-25" src="/image/logo-mixi-tét.png" alt="">
+                    <p style="color: rgb(22,184,186); font-weight: 500; font-size: 1.1rem;"><span
+                            style="font-weight: 700; font-size: 1.7rem;">
+                            T</span>HÂN GỬI: &nbsp; Chân thành
+                        cảm ơn Quý Khách đã tin tưởng và lựa chọn MixiShop cho nhu cầu mau sắm.
+                        Chúng tôi hy vọng Quý Khách hài lòng với trải nghiệm mua sắm và sản phẩm của chúng tôi.
+                        Nếu Quý Khách cần hỗ trợ hoặc có bất kỳ câu hỏi nào, xin vui lòng liên hệ với chúng tôi qua
+                        email.
+                        Rất mong được phục vụ Quý Khách trong tương lai.</p>
+                    <p style="color: rgb(22,184,186); font-weight: 700; font-size: 1.7rem;" class="float-end">MIXI
+                        GAMING</p>
+                    <div class="row">
+                        <div class="d-flex justify-content-center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- order completa -->
+        <div>
+            <div class="text-center pt-3">
+                <div class="row">
+                    <div class="col-lg-7 m-auto">
+                        <h3 style="font-weight: 600;">Các đơn hàng của bạn</h3>
+                        <div style="height: 4px; width: 70%;
+                    background-color: rgb(0,119,132);
+                    display: inline-block;" class="m-auto"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" style="max-height: 600px;">
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.orderid}"></td>
+                            <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#numbers.formatDecimal(order.amount, 1, 'COMMA', 2, 'POINT')}"></td>
+                            <td>
+                                <span style="color: rgb(240, 90, 90);" th:if="${order.status == 0}"
+                                    th:text="'Đang đặt hàng'"></span>
+                                <span style="color: rgb(227, 76, 76);" th:if="${order.status == 1}"
+                                    th:text="'Đã đặt hàng'"></span>
+                                <span style="color: rgb(219, 65, 65);" th:if="${order.status == 2}"
+                                    th:text="'Đang giao hàng'"></span>
+                                <span style="color: rgb(97, 191, 228);" th:if="${order.status == 3}"
+                                    th:text="'Đã nhận hàng'"></span>
+                            </td>
+                            <td>
+                                <form th:action="@{/site/carts/ordercompleta/update-status}" method="post"
+                                    th:if="${order.status == 2}">
+                                    <input type="hidden" name="orderId" th:value="${order.orderid}" />
+                                    <input type="hidden" name="status" value="3" />
+                                    <button type="submit" class="btn-Cart">Đã nhận hàng</button>
+                                </form>
+                                <button th:if="${order.status == 3}" type="submit" class="btn-Cart">Đã Hoàn thành</button>
+                                <button th:if="${order.status == 1}" type="submit" class="btn-Cart">Vui lòng chờ</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
