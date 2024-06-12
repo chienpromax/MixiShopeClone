@@ -30,13 +30,8 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/admin/report/revenueCategory}">Theo doanh mục</a>
                     </li>
-                    <span class=""><i class="bi bi-chevron-right"></i></span>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/site/carts/checkdetail}">CHECKUOT DETAILS</a>
-                    </li>
-                    <span class=""><i class="bi bi-chevron-double-right"></i></span>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/site/carts/ordercompleta}">ORDER COMPLETA</a>
+                        <a class="nav-link" th:href="@{/admin/report/revenueMonth}">Theo tháng</a>
                     </li>
                 </ul>
             </div>
@@ -98,11 +93,21 @@
             },
             options: {
                 scales: {
-                    yAxes: [{
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Doanh mục'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Tổng tiền'
+                        },
                         ticks: {
                             beginAtZero: true
                         }
-                    }]
+                    }
                 }
             }
         });
@@ -125,11 +130,21 @@
             },
             options: {
                 scales: {
-                    yAxes: [{
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Doanh mục'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Số lượng'
+                        },
                         ticks: {
                             beginAtZero: true
                         }
-                    }]
+                    }
                 }
             }
         });
