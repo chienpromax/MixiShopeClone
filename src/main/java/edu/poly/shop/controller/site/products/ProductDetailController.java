@@ -59,6 +59,7 @@ public class ProductDetailController {
         orderService.addProductToCart(customer.getCustomerId(), productId);
 
         return "redirect:/site/carts/cartdetail"; // Chuyển hướng tới trang giỏ hàng
+        // return "site/products/productdetail";
     }
 
     public List<Product> findRandomSimilarProducts(List<Product> similarProducts, int count) {

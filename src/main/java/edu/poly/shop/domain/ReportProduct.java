@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReportMonth {
+public class ReportProduct {
     
     @Id
-    private Integer month;
+    private String productName;
     private Long totalQuantitySold;
     private Double totalRevenue;
 }

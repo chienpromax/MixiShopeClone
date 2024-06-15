@@ -25,7 +25,7 @@
                                 <input type="hidden" th:field="*{image}" />
                                 <!-- Hiển thị tên ảnh hiện tại -->
                                 <div class="input-group mb-3">
-                                    <input type="file" class="form-control" id="cover" th:field="*{imageFile}">
+                                    <input type="file" class="form-control" id="cover" th:field="*{imageFile}" required>
                                     <label class="input-group-text" for="cover">Upload</label>
                                 </div>
                             </div>
@@ -37,35 +37,35 @@
                                 <div class="col-md-6">
                                     <label for="" class="form-label fs-5">Product id</label>
                                     <input type="hidden" th:field="*{isEdit}" />
-                                    <input th:field="*{productid}" type="number" class="form-control" />
+                                    <input th:field="*{productid}" type="number" class="form-control" readonly/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="form-label fs-5">Name</label>
-                                    <input th:field="*{name}" type="text" class="form-control" />
+                                    <input th:field="*{name}" type="text" class="form-control" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="form-label fs-5">Quantity</label>
-                                    <input th:field="*{quantity}" type="number" class="form-control" />
+                                    <input th:field="*{quantity}" type="number" class="form-control" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="form-label fs-5">Price</label>
-                                    <input th:field="*{price}" type="number" class="form-control" />
+                                    <input th:field="*{price}" type="number" class="form-control" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="form-label fs-5">Entered Day</label>
-                                    <input th:field="*{enteredDate}" type="date" class="form-control" />
+                                    <input th:field="*{enteredDate}" type="date" class="form-control" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="form-label fs-5">Discount</label>
-                                    <input th:field="*{discount}" type="text" class="form-control" />
+                                    <input th:field="*{discount}" type="text" class="form-control" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="form-label fs-5">Status</label>
-                                    <input th:field="*{status}" type="text" class="form-control" />
+                                    <input th:field="*{status}" type="text" class="form-control" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="form-label fs-5">CategoryId</label>
-                                    <input th:field="*{categoryid}" type="text" class="form-control" />
+                                    <input th:field="*{categoryid}" type="text" class="form-control" required/>
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label fs-5">Description</label>

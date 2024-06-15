@@ -21,7 +21,7 @@
 						</div>
 						<div class="col-md-6">
 							<label for="" class="form-label fs-4">Category Name</label> 
-							<input th:field="*{name}" aria-describedby="categorynameh" type="text" class="form-control" />
+							<input th:field="*{name}" aria-describedby="categorynameh" type="text" class="form-control" required/>
 							<small id="categorynameh" class="form-text text-muted" th:if="${#fields.hasErrors('name')}"> category name is required</small>
 						</div>
 					</div>

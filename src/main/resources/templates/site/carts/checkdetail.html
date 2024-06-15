@@ -17,34 +17,34 @@
                         <form th:action="@{/site/carts/saveCustomerInfo}" method="post" th:object="${customer}">
                             <label for="fullname" class="form-label">Họ và tên *</label>
                             <input type="text" class="form-control" placeholder="Nhập họ và tên"
-                                th:field="*{fullName}" />
+                                th:field="*{fullName}" required/>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="phone" class="form-label mt-3">Số điện thoại *</label>
                                         <input type="text" class="form-control" placeholder="Nhập số điện thoại"
-                                            th:field="*{phone}" />
+                                            th:field="*{phone}" required/>
                                         <label for="tinh" class="form-label mt-3">Ngày đăng ký *</label>
-                                        <input th:field="*{registeredDate}" type="date" class="form-control" />
+                                        <input th:field="*{registeredDate}" type="date" class="form-control" required/>
                                         <label for="tinh" class="form-label mt-3">Tỉnh/Thành phố *</label>
                                         <input type="text" class="form-control" placeholder="Nhập Tỉnh/Thành phố"
-                                            th:field="*{tinh}" />
+                                            th:field="*{tinh}" required/>
                                         <label for="xa" class="form-label mt-3">Xã/Phường thị trấn *</label>
                                         <input type="text" class="form-control" placeholder="Nhập Xã/Phường thị trấn"
-                                            th:field="*{xa}" />
+                                            th:field="*{xa}" required/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="email" class="form-label mt-3">Địa chỉ email *</label>
-                                        <input type="text" class="form-control" placeholder="Nhập Email"
-                                            th:field="*{email}" />
+                                        <input type="email" class="form-control" placeholder="Nhập Email"
+                                            th:field="*{email}" required/>
                                         <label for="quan" class="form-label mt-3">Quận/Huyện *</label>
                                         <input type="text" class="form-control" placeholder="Nhập Quận/Huyện"
-                                            th:field="*{quan}" />
+                                            th:field="*{quan}" required/>
                                         <label for="address" class="form-label mt-3">Địa chỉ giao hàng *</label>
                                         <input type="text" class="form-control" placeholder="Nhập địa chỉ cụ thể số nhà"
-                                            th:field="*{address}" />
+                                            th:field="*{address}" required/>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                             <label for="note" class="form-label">Ghi chú đơn hàng</label>
                             <textarea class="form-control" rows="2" th:field="*{note}"></textarea>
                             <div class="d-flex align-items-center justify-content-center mt-3">
-                                <input type="hidden" th:field="*{customerId}" />
+                                <input type="hidden" th:field="*{customerId}"/>
                                 <button type="submit" class="btn-Cart">Lưu thông tin</button>
                             </div>
                         </form>
@@ -84,13 +84,13 @@
                             <p class="card-text py-2">Hoá đơn chưa kèm phí ship (Quý khách thanh toán bằng tiền mặt hoặc
                                 chuyển khoản theo yêu cầu với đơn hàng của shop).</p>
                             <div class="form-check py-2">
-                                <input class="form-check-input" type="checkbox" value="" id="" checked />
+                                <input class="form-check-input" type="checkbox" value="" id="" checked required/>
                                 <label class="form-check-label" for=""> Tôi đã đọc và đồng ý với điều khoản và điều kiện
                                     của website * </label>
                             </div>
                             <div class="row py-2 d-flex justify-content-center text-center">
                                 <form th:action="@{/site/carts/placeorder}" method="post">
-                                    <input type="hidden" th:value="${customer.customerId}" name="customerId"/>
+                                    <input type="hidden" th:value="${customer.customerId}" name="customerId"required/>
                                     <button type="submit" class="btn-Cart w-75">Đặt hàng</button>
                                 </form>
                             </div>

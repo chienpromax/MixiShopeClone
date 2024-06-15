@@ -16,23 +16,23 @@
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">orderDetail ID</label>
                             <input type="hidden" th:field="*{isEdit}"/> 
-                            <input th:field="*{orderDetailid}" type="number" class="form-control" />
+                            <input th:field="*{orderDetailid}" type="number" class="form-control" readonly/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">order ID</label>
-                            <input th:field="*{orderid}" type="number" class="form-control" />
+                            <input th:field="*{orderid}" type="number" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">product id</label>
-                            <input th:field="*{productid}" type="number" class="form-control" />
+                            <input th:field="*{productid}" type="number" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">quantity</label>
-                            <input th:field="*{quantity}" type="number" class="form-control" />
+                            <input th:field="*{quantity}" type="number" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">unitPrice</label>
-                            <input th:field="*{unitPrice}" type="number" class="form-control" />
+                            <input th:field="*{unitPrice}" type="number" class="form-control" required/>
                         </div>
                     </div>
                     <div class="text-center">

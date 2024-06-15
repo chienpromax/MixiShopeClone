@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Thống kê doanh thu theo tháng</title>
+    <title>Thống kê sản phẩm bán chạy nhất</title>
     <link rel="shortcut icon" type="" href="/image/logoAdmin.png" />
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -29,7 +29,7 @@
                         <a class="nav-link" th:href="@{/admin/report/revenueCategory}">Theo doanh mục</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/admin/report/revenueMonth}">Theo tháng</a>
+                        <a class="nav-link" th:href="@{/admin/report/revenueMonth}">Thống kê tháng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/admin/report/bestSellingProducts}">Sản phẩm bán chạy</a>
@@ -43,8 +43,8 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <canvas id="combinedChart"></canvas>
-                    <h3>Thống kê doanh thu và số lượng bán ra theo tháng</h3>
+                    <canvas id="bestSellingProductsChart"></canvas>
+                    <h3>Thống kê sản phẩm bán chạy nhất</h3>
                 </div>
                 <div class="col-md-2"></div>
             </div>
@@ -54,23 +54,24 @@
     <script th:inline="javascript">
         var items = /*[[${items}]]*/[];
 
-        var months = items.map(function(item) {
-            return item.month;
-        });
-
-        var revenues = items.map(function(item) {
-            return item.totalRevenue;
+        var products = items.map(function(item) {
+            return item.productName;
         });
 
         var quantities = items.map(function(item) {
             return item.totalQuantitySold;
         });
 
-        var combinedCtx = document.getElementById('combinedChart').getContext('2d');
+        var revenues = items.map(function(item) {
+            return item.totalRevenue;
+        });
 
-        var combinedChart = new Chart(combinedCtx, {
+        var ctx = document.getElementById('bestSellingProductsChart').getContext('2d');
+
+        var bestSellingProductsChart = new Chart(ctx, {
+            type: 'bar',
             data: {
-                labels: months,
+                labels: products,
                 datasets: [{
                     type: 'bar',
                     label: 'Số lượng bán ra',
@@ -91,19 +92,13 @@
             },
             options: {
                 scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Tháng'
-                        }
-                    },
                     yAxes: [{
                         id: 'y-axis-1',
                         type: 'linear',
                         position: 'left',
-                        title: {
+                        scaleLabel: {
                             display: true,
-                            text: 'Số lượng'
+                            labelString: 'Số lượng bán ra'
                         },
                         ticks: {
                             beginAtZero: true
@@ -112,15 +107,12 @@
                         id: 'y-axis-2',
                         type: 'linear',
                         position: 'right',
-                        title: {
+                        scaleLabel: {
                             display: true,
-                            text: 'Tổng tiền'
+                            labelString: 'Doanh thu'
                         },
                         ticks: {
                             beginAtZero: true
-                        },
-                        grid: {
-                            drawOnChartArea: false
                         }
                     }]
                 }

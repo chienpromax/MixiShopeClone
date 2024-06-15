@@ -10,7 +10,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h2 class="text-center mt-5" style="color: rgb(0, 119, 132); font-weight: 700;">Đăng ký</h2>
-                <i th:text="${message}" style="color: red; font-size: 1.3rem; font-weight: 500; text-align: center;"></i>
+                <p th:text="${message}" style="color: red; font-size: 1.3rem; font-weight: 500; text-align: center;"></p>
                 <form th:action="@{/site/accounts/register}" th:object="${account}" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>

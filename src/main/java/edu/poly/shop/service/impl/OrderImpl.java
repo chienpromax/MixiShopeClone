@@ -64,7 +64,7 @@ public class OrderImpl implements OrderService {
         return orderRepository.findByOrderDateAndCustomerUsername(orderDate, username, pageable);
     }
 	
-	// thêm sản phẩm vào giở
+	// thêm sản phẩm vào giỏ
 	@Override
     public void addProductToCart(Integer customerId, Long productId) {
         Order order = orderRepository.findPendingOrderByCustomerId(customerId);

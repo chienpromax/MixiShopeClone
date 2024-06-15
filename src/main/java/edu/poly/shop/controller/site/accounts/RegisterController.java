@@ -30,7 +30,7 @@ public class RegisterController {
     @PostMapping("register")
     public String registerUser(@ModelAttribute("account") AccountDto dto, @RequestParam("username") String username, Model model) {
         if (accountService.existsByUsername(username)) {
-            model.addAttribute("message", "Username đã tồn tại");
+            model.addAttribute("message", "Tên đăng nhập đã tồn tại");
             return "site/accounts/register";
         }
         Account entity = new Account();

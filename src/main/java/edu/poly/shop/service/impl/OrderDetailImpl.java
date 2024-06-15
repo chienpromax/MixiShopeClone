@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import edu.poly.shop.domain.OrderDetailDto;
-import edu.poly.shop.model.Order;
 import edu.poly.shop.model.OrderDetail;
 import edu.poly.shop.model.Product;
 import edu.poly.shop.repository.OrderDetailRepository;
@@ -30,8 +29,6 @@ public class OrderDetailImpl implements OrderDetailService {
 	@Autowired
 	private ProductRepository productRepository;
 
-	@Autowired
-    private OrderRepository orderRepository;
 
 	@Override
     public List<OrderDetailDto> findAllOrderDetailsWithProductsByUsername(String username) {

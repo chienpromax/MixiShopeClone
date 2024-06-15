@@ -43,14 +43,16 @@ public class LoginController {
             SessionUtils.setAttribute(request, "loggedInUser", account);
             // Save to cookie
             CookieUtils.addCookie(response, "loggedInUser", username, 24 * 60 * 60);
-            
+            if (account.isRole()) {
+                return "redirect:/admin/products/searchpaginated";
+            }
             // Lấy thông tin giỏ hàng
             List<OrderDetailDto> orderDetails = orderDetailService.findAllOrderDetailsWithProductsByUsername(username);
             model.addAttribute("orderdetails", orderDetails);
 
             return "redirect:/site/page/home";
         } else {
-            model.addAttribute("message", "username or password failed");
+            model.addAttribute("message", "Sai tên đăng nhập hoạc mật khẩu");
             model.addAttribute("user", new AccountDto());
             return "site/accounts/login";
         }

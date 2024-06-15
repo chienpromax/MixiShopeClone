@@ -16,43 +16,43 @@
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">CustomerId</label>
                             <input type="hidden" th:field="*{isEdit}" />
-                            <input th:field="*{customerId}" type="text" class="form-control" />
+                            <input th:field="*{customerId}" type="text" class="form-control" readonly/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">FullName</label>
-                            <input th:field="*{fullName}" type="text" class="form-control" />
+                            <input th:field="*{fullName}" type="text" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">Phone</label>
-                            <input th:field="*{phone}" type="text" class="form-control" />
+                            <input th:field="*{phone}" type="text" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">Email</label>
-                            <input th:field="*{email}" type="text" class="form-control" />
+                            <input th:field="*{email}" type="email" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">RegisteredDate</label>
-                            <input th:field="*{registeredDate}" type="date" class="form-control" />
+                            <input th:field="*{registeredDate}" type="date" class="form-control" required/>
                         </div>                        
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">Tinh</label>
-                            <input th:field="*{tinh}" type="text" class="form-control" />
+                            <input th:field="*{tinh}" type="text" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">Quan</label>
-                            <input th:field="*{quan}" type="text" class="form-control" />
+                            <input th:field="*{quan}" type="text" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">Xa</label>
-                            <input th:field="*{xa}" type="text" class="form-control" />
+                            <input th:field="*{xa}" type="text" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">Address</label>
-                            <input th:field="*{address}" type="text" class="form-control" />
+                            <input th:field="*{address}" type="text" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label fs-5">Username</label>
-                            <input th:field="*{username}" type="text" class="form-control" />
+                            <input th:field="*{username}" type="text" class="form-control" required/>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Note</label>

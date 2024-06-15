@@ -26,14 +26,14 @@
                             </form>
                         </div>
                         <div class="col-md-6 d-flex justify-content-end">
-                            <a class="btn btn-primary" th:href="@{/admin/accounts/add}">Add new</a>
+                            <a class="btn btn-primary" th:href="@{/admin/accounts/add}">Thêm mới</a>
                         </div>
                     </div>
                 </div>
                 <div class="row" th:if="${!accountPage.hasContent()}">
                     <div class="col">
                         <div class="alert alert-danger" role="alert">
-                            <Strong>No accounts Found</Strong>
+                            <Strong>Không có tài khoản</Strong>
                         </div>
                     </div>
                 </div>
@@ -41,24 +41,24 @@
                     th:if="${accountPage.hasContent()}">
                     <thead>
                         <tr>
-                            <th>userName</th>
-                            <th>pasword</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Mật khẩu</th>
                             <th>email</th>
-                            <th>role</th>
-                            <th>Edit</th>
+                            <th>Vai trò</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="account, iStat : ${accountPage.content}">
-                            <td th:text="${account.username}">1</td>
+                            <td th:text="${account.username}"></td>
                             <td th:text="${account.password}"></td>
                             <td th:text="${account.email}"></td>
                             <td th:text="${account.role}"></td>
                             <td>
                                 <a th:href="@{'/admin/accounts/edit/' + ${account.username}}"
-                                    class="btn btn-primary" type="button">edit</a> |
+                                    class="btn btn-primary" type="button">Sửa</a> |
                                 <a th:href="@{'/admin/accounts/delete/' + ${account.username}}"
-                                    class="btn btn-primary" type="button">delete</a>
+                                    class="btn btn-danger" type="button">Xóa</a>
                             </td>
                         </tr>
                     </tbody>
@@ -69,7 +69,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <form action="">
-                                <label for="size" class="form-label">Page size</label>
+                                <label for="size" class="form-label">Hiển thị trang</label>
                                 <select name="size" id="size" class="form-control" 
                                 onchange="this.form.submit()">
                                     <option th:selected="${accountPage.size == 5}" value="5">5</option>

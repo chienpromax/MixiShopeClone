@@ -36,10 +36,10 @@ public class ForgotPasswordController {
         Optional<Account> account = accountService.findById(dto.getUsername());
         if (account.isPresent() && account.get().getEmail().equals(dto.getEmail())) {
             String pass = account.get().getPassword();
-            emailService.sendEmail(dto.getEmail(), "Your Password", "Your password is: " + pass);
+            emailService.sendEmail(dto.getEmail(), "Mật khẩu", "Mật khẩu của bạn là:  " + pass);
             model.addAttribute("message", "mật khẩu được gửi về email.");
         } else {
-            model.addAttribute("message", "sai username or email.");
+            model.addAttribute("message", "Sai tên đăng nhập hoạc Email.");
         }
         model.addAttribute("account", new AccountDto());
         return "site/accounts/forgotpassword";

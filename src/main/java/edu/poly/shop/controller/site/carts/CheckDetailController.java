@@ -65,6 +65,7 @@ public class CheckDetailController {
         if (pendingOrder != null) {
             pendingOrder.setStatus(1); // Cập nhật trạng thái đơn hàng thành 1
             orderService.save(pendingOrder);
+            return "redirect:/site/carts/ordercompleta";
         }
         return "redirect:/site/carts/checkdetail";
     }
