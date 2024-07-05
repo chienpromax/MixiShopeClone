@@ -270,14 +270,14 @@ video {
 }
 /* ========= footer ========= */
 .news {
-    background: linear-gradient(0, rgb(0, 0, 0), rgb(219, 219, 219));
+    background: linear-gradient(0, rgb(0, 0, 0), rgb(33, 33, 33));
     /* background-color: black; */
     color: rgb(255, 255, 255);
 }
 
-.news h1 {
+.news h3 {
     margin-top: 25px;
-    color: rgb(60, 60, 60);
+    color: rgb(255, 255, 255);
 }
 
 .btn-follow {

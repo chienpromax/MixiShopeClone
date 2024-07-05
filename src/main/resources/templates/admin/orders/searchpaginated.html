@@ -11,7 +11,7 @@
             <div class="table-responsive">
                 <div class="card mb-2">
                     <div class="card-body text-center">
-                        <h2 class="text-primary">Danh sách order</h2>
+                        <h2 style="color: rgb(2, 188, 191); font-weight: 500; font-size: 2rem;">Danh sách order</h2>
                         <i th:text="${message}" style="color: red; font-size: 1.3rem; font-weight: 500;"></i>
                     </div>
                     <div class="row m-2 mb-2 pb-3">
@@ -52,14 +52,14 @@
                         <tr th:each="order : ${orderPage.content}">
                             <td th:text="${order.orderid}"></td>
                             <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}"></td>
-                            <td th:text="${order.customerid}"></td>
+                            <td th:text="${order.customer.fullName}"></td>
                             <td th:text="${order.amount}"></td>
                             <td th:text="${order.status}"></td>
                             <td>
                                 <a th:href="@{'/admin/orders/edit/' + ${order.orderid}}" class="btn btn-primary"
-                                    type="button">edit</a> |
-                                <a th:href="@{'/admin/orders/delete/' + ${order.orderid}}" class="btn btn-primary"
-                                    type="button">delete</a>
+                                    type="button">Sửa</a> |
+                                <a th:href="@{'/admin/orders/delete/' + ${order.orderid}}" class="btn btn-danger"
+                                    type="button">Xóa</a>
                             </td>
                         </tr>
                     </tbody>

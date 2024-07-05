@@ -43,10 +43,10 @@ public class NavController {
     }
 
     @ModelAttribute
-    public String home(Model model, HttpServletRequest request) {
+    public String category(Model model, HttpServletRequest request) {
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
-        return "site/home";
+        return "site/page/home";
     }
 
 }

@@ -11,7 +11,7 @@
             <div class="table-responsive">
                 <div class="card mb-2">
                     <div class="card-body text-center">
-                        <h2 class="text-primary">Danh sách danh mục</h2>
+                        <h2 style="color: rgb(2, 188, 191); font-weight: 500; font-size: 2rem;">Danh sách danh mục</h2>
                         <i th:text="${message}" style="color: red; font-size: 1.3rem; font-weight: 500;"></i>
                     </div>
                     <div class="row m-2 mb-2 pb-3">
@@ -52,9 +52,9 @@
                             <td th:text="${category.name}">Category Name</td>
                             <td>
                                 <a th:href="@{'/admin/categories/edit/' + ${category.categoryid}}"
-                                    class="btn btn-primary" type="button">edit</a> |
+                                    class="btn btn-primary" type="button">Sửa</a> |
                                 <a th:href="@{'/admin/categories/delete/' + ${category.categoryid}}"
-                                    class="btn btn-primary" type="button">delete</a>
+                                    class="btn btn-danger" type="button">Xóa</a>
                             </td>
                         </tr>
                     </tbody>

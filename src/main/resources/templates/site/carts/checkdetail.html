@@ -90,7 +90,7 @@
                             </div>
                             <div class="row py-2 d-flex justify-content-center text-center">
                                 <form th:action="@{/site/carts/placeorder}" method="post">
-                                    <input type="hidden" th:value="${customer.customerId}" name="customerId"required/>
+                                    <input type="hidden" th:value="${customer.customerId}" name="customerId"/>
                                     <button type="submit" class="btn-Cart w-75">Đặt hàng</button>
                                 </form>
                             </div>

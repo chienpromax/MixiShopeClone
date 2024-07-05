@@ -12,6 +12,7 @@
         <section class="video" style="height: 350px;">
             <div class="container d-flex justify-content-center align-items-center position-relative">
                 <img src="/image/domixi.jpg" alt="">
+                <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6);"></div>
                 <div class="text-center position-absolute top-50 start-50 translate-middle">
                     <img class="w-25" src="/image/logo-mixi-tét.png" alt="">
                     <p style="color: rgb(22,184,186); font-weight: 500; font-size: 1.1rem;"><span
@@ -22,11 +23,9 @@
                         Nếu Quý Khách cần hỗ trợ hoặc có bất kỳ câu hỏi nào, xin vui lòng liên hệ với chúng tôi qua
                         email.
                         Rất mong được phục vụ Quý Khách trong tương lai.</p>
-                    <p style="color: rgb(22,184,186); font-weight: 700; font-size: 1.7rem;" class="float-end">MIXI
-                        GAMING</p>
-                    <div class="row">
-                        <div class="d-flex justify-content-center">
-
+                        <div class="row">
+                            <div class="">
+                            <p style="color: rgb(22,184,186); font-weight: 700; font-size: 1.7rem;" class="float-end">Độ Phùng</p>
                         </div>
                     </div>
                 </div>
@@ -34,8 +33,8 @@
         </section>
 
         <!-- order completa -->
-        <div>
-            <div class="text-center pt-3">
+        <section class="row py-4">
+            <div class="text-center pt-5">
                 <div class="row">
                     <div class="col-lg-7 m-auto">
                         <h3 style="font-weight: 600;">Các đơn hàng của bạn</h3>
@@ -78,14 +77,13 @@
                                     <input type="hidden" name="status" value="3" />
                                     <button type="submit" class="btn-Cart">Đã nhận hàng</button>
                                 </form>
-                                <button th:if="${order.status == 3}" type="submit" class="btn-Cart">Đã Hoàn thành</button>
                                 <button th:if="${order.status == 1}" type="submit" class="btn-Cart">Vui lòng chờ</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
     </section>
 </body>
 

@@ -58,8 +58,8 @@ public class ProductDetailController {
         // Thêm sản phẩm vào giỏ hàng
         orderService.addProductToCart(customer.getCustomerId(), productId);
 
-        return "redirect:/site/carts/cartdetail"; // Chuyển hướng tới trang giỏ hàng
-        // return "site/products/productdetail";
+        // return "redirect:/site/carts/cartdetail"; // Chuyển hướng tới trang giỏ hàng
+        return "redirect:/site/products/productdetail/" + productId;
     }
 
     public List<Product> findRandomSimilarProducts(List<Product> similarProducts, int count) {

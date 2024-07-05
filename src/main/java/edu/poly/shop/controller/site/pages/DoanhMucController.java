@@ -36,15 +36,17 @@ public class DoanhMucController {
             @RequestParam(value = "sortOrder", defaultValue = "") String sortOrder,
             @RequestParam(value = "searchQuery", required = false) String searchQuery,
             Model model) {
-        int pageSize = 6;
+        // int pageSize = 6;
 
         Optional<Category> categoryOptional = categoryService.findById(categoryId);
         String categoryName = categoryOptional.map(Category::getName).orElse(null);
 
+        // tăng dần
         Sort sort = Sort.by("price").ascending();
         if ("lowToHigh".equals(sortOrder)) {
             sort = Sort.by("price").ascending();
         } else if ("highToLow".equals(sortOrder)) {
+            // giảm dần
             sort = Sort.by("price").descending();
         }
         model.addAttribute("sortOrder", sortOrder);
@@ -54,7 +56,7 @@ public class DoanhMucController {
 
     private String viewProducts(Long categoryId, int page, Double minPrice, Double maxPrice, String searchQuery,
             Sort sort, Model model, String categoryName) {
-        int pageSize = 6;
+        int pageSize = 9;
         Page<Product> productPage;
 
         if (searchQuery != null && !searchQuery.isEmpty()) {

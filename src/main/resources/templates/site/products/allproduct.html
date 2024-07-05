@@ -87,7 +87,11 @@
                     </ul>
                 </div>
                 <div class="col-md-9 m-auto">
-                    <div class="row">
+                    <div th:if="${products.isEmpty()}" class="d-flex justify-content-center">
+                        <img src="/image/empty-cart-1.png" class="img-fluid pb-2 mb-4 w-75" alt="" />
+                        <!-- <h5 style="font-size: 1.3rem;">Không có sản phẩm nào</h5> -->
+                    </div>
+                    <div th:unless="${products.isEmpty()}" class="row">
                         <div th:each="product, iterStat : ${products}" class="col-md-4 pt-2">
                             <div class="p-2">
                                 <div class="card-body">

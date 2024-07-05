@@ -68,16 +68,14 @@ public class OrderImpl implements OrderService {
 	@Override
     public void addProductToCart(Integer customerId, Long productId) {
         Order order = orderRepository.findPendingOrderByCustomerId(customerId);
-
         if (order == null) {
             order = new Order();
             order.setCustomerid(customerId);
             order.setOrderDate(new Date());
             order.setAmount(0.0);
-            order.setStatus(0); // Giả định 0 là trạng thái chưa thanh toán
+            order.setStatus(0); //0 là trạng thái chưa thanh toán
             orderRepository.save(order);
         }
-
         // Kiểm tra xem sản phẩm đã tồn tại trong đơn hàng chưa
         Optional<OrderDetail> existingOrderDetailOpt = orderDetailRepository.findOneByOrderidAndProductid(order.getOrderid(), productId);
         if (existingOrderDetailOpt.isPresent()) {
@@ -98,7 +96,7 @@ public class OrderImpl implements OrderService {
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setOrderid(order.getOrderid());
                 orderDetail.setProductid(productId);
-                orderDetail.setQuantity(1); // Giả định mỗi lần thêm 1 sản phẩm
+                orderDetail.setQuantity(1); // mỗi lần thêm 1 sản phẩm
                 orderDetail.setUnitPrice(product.getPrice());
                 orderDetailRepository.save(orderDetail);
 

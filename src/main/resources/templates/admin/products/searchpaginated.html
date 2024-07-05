@@ -11,7 +11,7 @@
             <div class="table-responsive">
                 <div class="card mb-2">
                     <div class="card-body text-center">
-                        <h2 class="text-primary">Danh sách sản phẩm</h2>
+                        <h2 style="color: rgb(2, 188, 191); font-weight: 500; font-size: 2rem;">Danh sách sản phẩm</h2>
                         <i th:text="${message}" style="color: red; font-size: 1.3rem; font-weight: 500;"></i>
                     </div>
                     <div class="row m-2 mb-2 pb-3">
@@ -69,10 +69,10 @@
                             <!-- <td th:text="${product.description}"></td> -->
                             <td th:text="${product.enteredDate}"></td>
                             <td th:text="${product.status}"></td>
-                            <td th:text="${product.categoryid}"></td>
+                            <td th:text="${product.category.name}"></td>
                             <td>
-                                <a th:href="@{'/admin/products/edit/' + ${product.productid}}" class="btn btn-primary" type="button">edit</a> |
-                                <a th:href="@{'/admin/products/delete/' + ${product.productid}}" class="btn btn-primary" type="button">delete</a>
+                                <a th:href="@{'/admin/products/edit/' + ${product.productid}}" class="btn btn-primary" type="button">Sửa</a> |
+                                <a th:href="@{'/admin/products/delete/' + ${product.productid}}" class="btn btn-danger" type="button">Xóa</a>
                             </td>
                         </tr>
                     </tbody>
@@ -83,7 +83,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <form action="">
-                                <label for="size" class="form-label">Page size</label>
+                                <label for="size" class="form-label">Kích thước trang</label>
                                 <select name="size" id="size" class="form-control" 
                                 onchange="this.form.submit()">
                                     <option th:selected="${productPage.size == 5}" value="5">5</option>

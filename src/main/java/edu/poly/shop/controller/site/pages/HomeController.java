@@ -33,6 +33,7 @@ public class HomeController {
         }
         model.addAttribute("products", products);
         
+        
         // Kiểm tra xem loggedInUser có phải là một đối tượng Account hay không
         Object loggedInUserObj = SessionUtils.getAttribute(request, "loggedInUser");
         if (loggedInUserObj instanceof Account) {

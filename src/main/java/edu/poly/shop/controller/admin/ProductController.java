@@ -108,7 +108,6 @@ public class ProductController {
 	public String list(ModelMap model) {
 		List<Product> list = productService.findAll();
 		model.addAttribute("products", list);
-
 		return "admin/products/list";
 	}
 

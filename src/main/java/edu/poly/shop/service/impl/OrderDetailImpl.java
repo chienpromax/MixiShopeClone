@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import edu.poly.shop.domain.OrderDetailDto;
+import edu.poly.shop.model.Order;
 import edu.poly.shop.model.OrderDetail;
 import edu.poly.shop.model.Product;
 import edu.poly.shop.repository.OrderDetailRepository;
@@ -29,6 +30,8 @@ public class OrderDetailImpl implements OrderDetailService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@Override
     public List<OrderDetailDto> findAllOrderDetailsWithProductsByUsername(String username) {
@@ -41,6 +44,7 @@ public class OrderDetailImpl implements OrderDetailService {
 
             Optional<Product> productOpt = productRepository.findById(orderDetail.getProductid());
             if (productOpt.isPresent()) {
+				// lấy ra cấc đối tượng product
                 Product product = productOpt.get();
                 dto.setProduct(product);
                 dto.setProductName(product.getName());
@@ -53,36 +57,74 @@ public class OrderDetailImpl implements OrderDetailService {
         return orderDetailDtos;
     }
 
-
-
 	@Override
-    public void increaseQuantity(Integer orderDetailId) {
-        Optional<OrderDetail> orderDetailOptional = orderDetailRepository.findById(orderDetailId);
-        if (orderDetailOptional.isPresent()) {
-            OrderDetail orderDetail = orderDetailOptional.get();
-            orderDetail.setQuantity(orderDetail.getQuantity() + 1);
-            orderDetailRepository.save(orderDetail);
-        }
-    }
+	public void increaseQuantity(Integer orderDetailId) {
+		Optional<OrderDetail> orderDetailOptional = orderDetailRepository.findById(orderDetailId);
+		if (orderDetailOptional.isPresent()) {
+			OrderDetail orderDetail = orderDetailOptional.get();
+			orderDetail.setQuantity(orderDetail.getQuantity() + 1);
+			orderDetailRepository.save(orderDetail);
+	
+			// Cập nhật tổng tiền đơn hàng
+			Order order = orderRepository.findById(orderDetail.getOrderid()).orElse(null);
+			if (order != null) {
+				double totalAmount = orderDetailRepository.findByOrderid(order.getOrderid())
+					.stream()
+					.mapToDouble(od -> od.getQuantity() * od.getUnitPrice())
+					.sum();
+				order.setAmount(totalAmount);
+				orderRepository.save(order);
+			}
+		}
+	}
+	
+	@Override
+	public void decreaseQuantity(Integer orderDetailId) {
+		Optional<OrderDetail> orderDetailOptional = orderDetailRepository.findById(orderDetailId);
+		if (orderDetailOptional.isPresent()) {
+			OrderDetail orderDetail = orderDetailOptional.get();
+			if (orderDetail.getQuantity() > 1) {
+				orderDetail.setQuantity(orderDetail.getQuantity() - 1);
+				orderDetailRepository.save(orderDetail);
+	
+				// Cập nhật tổng tiền đơn hàng
+				Order order = orderRepository.findById(orderDetail.getOrderid()).orElse(null);
+				if (order != null) {
+					double totalAmount = orderDetailRepository.findByOrderid(order.getOrderid())
+						.stream()
+						.mapToDouble(od -> od.getQuantity() * od.getUnitPrice())
+						.sum();
+					order.setAmount(totalAmount);
+					orderRepository.save(order);
+				}
+			} else {
+				removeProduct(orderDetailId);
+			}
+		}
+	}
+	
+	@Override
+	public void removeProduct(Integer orderDetailId) {
+		Optional<OrderDetail> orderDetailOptional = orderDetailRepository.findById(orderDetailId);
+		if (orderDetailOptional.isPresent()) {
+			OrderDetail orderDetail = orderDetailOptional.get();
+			Integer orderId = orderDetail.getOrderid();
+			orderDetailRepository.delete(orderDetail);
+	
+			// Cập nhật tổng tiền đơn hàng
+			Order order = orderRepository.findById(orderId).orElse(null);
+			if (order != null) {
+				double totalAmount = orderDetailRepository.findByOrderid(orderId)
+					.stream()
+					.mapToDouble(od -> od.getQuantity() * od.getUnitPrice())
+					.sum();
+				order.setAmount(totalAmount);
+				orderRepository.save(order);
+			}
+		}
+	}
+	
 
-    @Override
-    public void decreaseQuantity(Integer orderDetailId) {
-        Optional<OrderDetail> orderDetailOptional = orderDetailRepository.findById(orderDetailId);
-        if (orderDetailOptional.isPresent()) {
-            OrderDetail orderDetail = orderDetailOptional.get();
-            if (orderDetail.getQuantity() > 1) {
-                orderDetail.setQuantity(orderDetail.getQuantity() - 1);
-                orderDetailRepository.save(orderDetail);
-            } else {
-                orderDetailRepository.delete(orderDetail);
-            }
-        }
-    }
-
-    @Override
-    public void removeProduct(Integer orderDetailId) {
-        orderDetailRepository.deleteById(orderDetailId);
-    }
 	@Override
 	public Page<OrderDetail> findByOrderid(Integer orderid, Pageable pageable) {
 		return orderDetailRepository.findByOrderid(orderid, pageable);

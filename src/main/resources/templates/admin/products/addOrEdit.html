@@ -25,7 +25,7 @@
                                 <input type="hidden" th:field="*{image}" />
                                 <!-- Hiển thị tên ảnh hiện tại -->
                                 <div class="input-group mb-3">
-                                    <input type="file" class="form-control" id="cover" th:field="*{imageFile}" required>
+                                    <input type="file" class="form-control" id="cover" th:field="*{imageFile}">
                                     <label class="input-group-text" for="cover">Upload</label>
                                 </div>
                             </div>
@@ -64,9 +64,15 @@
                                     <input th:field="*{status}" type="text" class="form-control" required/>
                                 </div>
                                 <div class="col-md-6">
+                                    <label for="" class="form-label fs-5">Chọn danh mục</label>
+                                    <select th:field="*{categoryid}" class="form-control" required>
+                                        <option th:each="category : ${categories}" th:value="${category.categoryid}" th:text="${category.name}"></option>
+                                    </select>
+                                </div>
+                                <!-- <div class="col-md-6">
                                     <label for="" class="form-label fs-5">CategoryId</label>
                                     <input th:field="*{categoryid}" type="text" class="form-control" required/>
-                                </div>
+                                </div> -->
                                 <div class="mb-3">
                                     <label for="" class="form-label fs-5">Description</label>
                                     <textarea th:field="*{description}" class="form-control" id="" rows="4"></textarea>
