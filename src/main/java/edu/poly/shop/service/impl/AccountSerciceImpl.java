@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
+import edu.poly.shop.domain.AccountDto;
 import edu.poly.shop.model.Account;
 import edu.poly.shop.repository.AccountRepository;
 import edu.poly.shop.service.AccountService;

@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: shopping-cart
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      dialect: org.hibernate.dialect.SQLServer2012Dialect
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=shopping_cart;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: 123
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: xuanchient033@gmail.com
+    password: ayiw lqih jicy vmgd
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 495470626151-93ok84700qqc77unq096bvukuvkk38dn.apps.googleusercontent.com
+            client-secret: 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
+          facebook:
+            client-id: 1013027497116282
+            client-secret: b3d54f58d9152c405408eb0b5ceb06b2
+

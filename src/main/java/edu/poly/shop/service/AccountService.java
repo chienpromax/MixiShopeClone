@@ -16,6 +16,7 @@ import edu.poly.shop.repository.AccountRepository;
 
 public interface AccountService {
 
+
 	void deleteAll();
 
 	<S extends Account> List<S> findAll(Example<S> example, Sort sort);

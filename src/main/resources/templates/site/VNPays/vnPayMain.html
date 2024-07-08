@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="" href="/image/logo-mixi-tét.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Thanh toán</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img th:src="@{/image/vnpay-logo.png}" style="width: 200px">
+                        </div>
+                        <h2 class="card-title">Thông Tin Hóa Đơn</h2>
+                        <p><strong>Số tiền:</strong> <span th:text="${orderTotal}"></span></p>
+                        <p><strong>Thông tin đơn hàng:</strong> <span th:text="${orderInfo}"></span></p>
+                        <p><strong>Ngày đặt:</strong> <span th:text="${orderDate}"></span></p>
+                        <p><strong>Mã trạng thái:</strong> <span th:text="${status}"></span></p>
+                        <form th:action="@{/submitOrder}" method="post" class="text-center">
+                            <input type="hidden" name="orderId" th:value="${orderId}" />
+                            <input type="hidden" name="amount" th:value="${orderTotal}" />
+                            <input type="hidden" name="orderInfo" th:value="${orderInfo}" />
+                            <button type="submit" class="btn btn-primary">Thanh toán</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

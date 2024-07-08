@@ -25,5 +25,4 @@ public class Account implements Serializable {
 	private boolean role;
 	@Column(columnDefinition = "nvarchar(50) not null")
 	private String email;
-
 }
