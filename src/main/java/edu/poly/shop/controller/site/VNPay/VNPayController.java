@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import edu.poly.shop.config.VNPayService;
 import edu.poly.shop.service.OrderService;
+import edu.poly.shop.service.VNPayService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

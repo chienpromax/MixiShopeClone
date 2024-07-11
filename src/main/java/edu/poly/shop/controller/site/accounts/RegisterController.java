@@ -2,6 +2,7 @@ package edu.poly.shop.controller.site.accounts;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -21,6 +22,9 @@ public class RegisterController {
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @RequestMapping("register")
     public String home(Model model) {
         model.addAttribute("account", new AccountDto());
@@ -35,6 +39,8 @@ public class RegisterController {
         }
         Account entity = new Account();
         BeanUtils.copyProperties(dto, entity);
+        // Mã hóa mật khẩu trước khi lưu
+        entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         accountService.save(entity);
         model.addAttribute("message", "Đăng ký thành công");
         // Reset form

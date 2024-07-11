@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +20,12 @@ import edu.poly.shop.model.Account;
 import edu.poly.shop.service.AccountService;
 import edu.poly.shop.service.OrderDetailService;
 import edu.poly.shop.utils.CookieUtils;
+import edu.poly.shop.utils.CustomUserDetails;
 import edu.poly.shop.utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -31,17 +38,18 @@ public class LoginController {
     @Autowired
     OrderDetailService orderDetailService;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @PostMapping("login")
     public String login(HttpServletRequest request, HttpServletResponse response, Model model,
-                        @RequestParam("username") String username, @RequestParam("password") String password) {
+            @RequestParam("username") String username, @RequestParam("password") String password) {
         Optional<Account> accountOptional = accountService.findById(username);
-        if (accountOptional.isPresent() && accountOptional.get().getPassword().equals(password)) {
+        if (accountOptional.isPresent()
+                && bCryptPasswordEncoder.matches(password, accountOptional.get().getPassword())) {
             Account account = accountOptional.get();
-            // Clear previous session attribute if exists
-            SessionUtils.removeAttribute(request, "loggedInUser");
-            // Save to session
-            SessionUtils.setAttribute(request, "loggedInUser", account);
-            // Save to cookie
+            // SessionUtils.removeAttribute(request, "loggedInUser");
+            // SessionUtils.setAttribute(request, "loggedInUser", account);
             CookieUtils.addCookie(response, "loggedInUser", username, 24 * 60 * 60);
             if (account.isRole()) {
                 return "redirect:/admin/products/searchpaginated";
@@ -59,26 +67,39 @@ public class LoginController {
     }
 
     @RequestMapping("login")
-    public String home(Model model, HttpServletRequest request) {
-        Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
-        if (loggedInUser != null) {
-            AccountDto accountDto = new AccountDto();
-            accountDto.setUsername(loggedInUser.getUsername());
-            accountDto.setPassword(loggedInUser.getPassword());
-            model.addAttribute("user", accountDto);
+    public String home(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()
+                && !(authentication instanceof AnonymousAuthenticationToken)) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof CustomUserDetails) {
+                CustomUserDetails userDetails = (CustomUserDetails) principal;
+
+                // Lấy thông tin người dùng từ CustomUserDetails và đưa vào model
+                AccountDto accountDto = new AccountDto();
+                accountDto.setUsername(userDetails.getUsername());
+                model.addAttribute("user", accountDto);
+            } else {
+                // Xử lý nếu principal không phải là CustomUserDetails
+                model.addAttribute("user", new AccountDto());
+            }
         } else {
+            // Xử lý nếu chưa đăng nhập
             model.addAttribute("user", new AccountDto());
         }
+
         return "site/accounts/login";
     }
 
-
-    @RequestMapping("logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-        // Invalidate session
-        SessionUtils.invalidateSession(request);
-        // Remove cookies if needed
-        CookieUtils.deleteCookie(request, response, "loggedInUser");
-        return "redirect:/site/accounts/login";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+        return "redirect:/site/accounts/login?logout";
     }
+
 }

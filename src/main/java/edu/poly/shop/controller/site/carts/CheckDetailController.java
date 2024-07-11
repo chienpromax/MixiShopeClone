@@ -3,6 +3,8 @@ package edu.poly.shop.controller.site.carts;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +18,10 @@ import edu.poly.shop.model.Customer;
 import edu.poly.shop.model.Order;
 import edu.poly.shop.service.CustomerService;
 import edu.poly.shop.service.OrderService;
+import edu.poly.shop.utils.CustomUserDetails;
 import edu.poly.shop.utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 
 @Controller
 @RequestMapping("site/carts/")
@@ -32,8 +34,11 @@ public class CheckDetailController {
     OrderService orderService;
 
     @GetMapping("checkdetail")
-    public String showCheckDetail(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
+    public String showCheckDetail(Model model, HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails loggedInUser = (CustomUserDetails) authentication.getPrincipal();
+
         if (loggedInUser == null) {
             return "redirect:/site/accounts/login";
         } else {
@@ -48,16 +53,34 @@ public class CheckDetailController {
     }
 
     @PostMapping("saveCustomerInfo")
-    public String saveCustomerInfo(@ModelAttribute Customer customer, HttpServletRequest request) {
+    public String saveCustomerInfo(@ModelAttribute Customer customer) {
         // Lấy thông tin người dùng đã đăng nhập
-        Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
-        if (loggedInUser != null) {
-            customer.setUsername(loggedInUser.getUsername());
-            // Lưu thông tin khách hàng
-            customerService.save(customer);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails loggedInUser = (CustomUserDetails) authentication.getPrincipal();
+        if (loggedInUser == null) {
+            return "redirect:/site/accounts/login";
         }
+
+        customer.setUsername(loggedInUser.getUsername());
+        // Lưu thông tin khách hàng
+        customerService.save(customer);
+
         return "redirect:/site/carts/checkdetail";
     }
+
+    // @PostMapping("saveCustomerInfo")
+    // public String saveCustomerInfo(@ModelAttribute Customer customer,
+    // HttpServletRequest request) {
+    // // Lấy thông tin người dùng đã đăng nhập
+    // Account loggedInUser = (Account) SessionUtils.getAttribute(request,
+    // "loggedInUser");
+    // if (loggedInUser != null) {
+    // customer.setUsername(loggedInUser.getUsername());
+    // // Lưu thông tin khách hàng
+    // customerService.save(customer);
+    // }
+    // return "redirect:/site/carts/checkdetail";
+    // }
 
     @PostMapping("placeorder")
     public String placeOrder(@RequestParam("customerId") Integer customerId) {

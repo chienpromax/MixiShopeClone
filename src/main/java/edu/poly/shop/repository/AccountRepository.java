@@ -11,6 +11,8 @@ import edu.poly.shop.model.Account;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
+    Account findByUsername(String username);
+
     List<Account> findByUsernameContaining(String username);
     
     Page<Account> findByUsernameContaining(String username, Pageable pageable);

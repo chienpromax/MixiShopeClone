@@ -7,8 +7,8 @@
 <body>
     <nav class="py-2 navbar navbar-expand-sm navbar-light bg-light" th:fragment="nav">
         <div class="container">
-            <a class="navbar-brand" th:href="@{/site/page/home}"><img width="100" height="60" src="/image/logo-mixi-tét.png"
-                    alt=""></a>
+            <a class="navbar-brand" th:href="@{/site/page/home}"><img width="100" height="60"
+                    src="/image/logo-mixi-tét.png" alt=""></a>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -38,6 +38,29 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
+                            <span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+                            <span sec:authorize="!isAuthenticated()">Tài khoản</span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item nav-link" sec:authorize="!isAuthenticated()"
+                                th:href="@{/site/accounts/login}">Đăng nhập</a>
+                            <a class="dropdown-item nav-link" sec:authorize="!isAuthenticated()"
+                                th:href="@{/site/accounts/register}">Đăng ký</a>
+                            <a class="dropdown-item nav-link" sec:authorize="!isAuthenticated()"
+                                th:href="@{/site/accounts/forgotpassword}">Quên mật khẩu</a>
+                            <a class="dropdown-item nav-link" sec:authorize="isAuthenticated()"
+                                th:href="@{/site/accounts/changepassword}">Đổi mật khẩu</a>
+                            <a class="dropdown-item nav-link" sec:authorize="isAuthenticated()"
+                                th:href="@{/site/carts/checkdetail}">Thông tin Người dùng</a>
+                                <a class="dropdown-item nav-link" sec:authorize="isAuthenticated() and hasAuthority('ROLE_ADMIN')"
+                                th:href="@{/admin/products/searchpaginated}">Trang Admin</a>
+                            <a class="dropdown-item nav-link" sec:authorize="isAuthenticated()"
+                                th:href="@{/site/accounts/logout}">Đăng xuất</a>
+                        </div>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             <span th:if="${loggedInUser != null}" th:text="${loggedInUser.username}"></span>
                             <span th:unless="${loggedInUser != null}">Tài khoản</span>
                         </a>
@@ -55,19 +78,22 @@
                             <a class="dropdown-item nav-link" th:if="${loggedInUser != null}"
                                 th:href="@{/site/accounts/logout}">Đăng xuất</a>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
                 <ul class="navbar-nav mt-lg-0 cart ms-3">
                     <li class="nav-item nav-item-cart">
                         <div class="d-flex align-items-center cart-title">
-                            <span class="me-1">Giỏ hàng / <span th:text="${#numbers.formatDecimal(totalRevenue, 1, 'COMMA', 2, 'POINT')}"></span> ₫</span>
+                            <span class="me-1">Giỏ hàng / <span
+                                    th:text="${#numbers.formatDecimal(totalRevenue, 1, 'COMMA', 2, 'POINT')}"></span>
+                                ₫</span>
                             <i style="font-size: 1.56rem; font-weight: 600;" class="bi bi-cart3"></i>
-                            <span class="cart-count" th:if="${orderdetails != null}" th:text="${orderdetails.size()}">0</span>
+                            <span class="cart-count" th:if="${orderdetails != null}"
+                                th:text="${orderdetails.size()}">0</span>
                         </div>
                         <!-- cart-shopping -->
                         <div th:replace="~{site/carts/cartshopping :: cartshopping}"></div>
                     </li>
-                </ul>                
+                </ul>
             </div>
         </div>
     </nav>

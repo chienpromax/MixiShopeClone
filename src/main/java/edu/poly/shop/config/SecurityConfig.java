@@ -1,73 +1,64 @@
-// package edu.poly.shop.config;
+package edu.poly.shop.config;
 
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-// import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-// import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-// import org.springframework.security.core.userdetails.UserDetailsService;
-// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-// import org.springframework.security.crypto.password.PasswordEncoder;
-// import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
-// @Configuration
-// @EnableWebSecurity
-// public class SecurityConfig {
+import edu.poly.shop.service.CustomUserDetailService;
 
-//     private final UserDetailsService userDetailsService;
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
 
-//     public SecurityConfig(UserDetailsService userDetailsService) {
-//         this.userDetailsService = userDetailsService;
-//     }
+    @Autowired
+    private CustomUserDetailService customUserDetailService;
 
-//     @Bean
-//     public PasswordEncoder passwordEncoder() {
-//         return new BCryptPasswordEncoder();
-//     }
+    @Bean
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-//     @Bean
-//     public DaoAuthenticationProvider authenticationProvider() {
-//         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//         authProvider.setUserDetailsService(userDetailsService);
-//         authProvider.setPasswordEncoder(passwordEncoder());
-//         return authProvider;
-//     }
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/*").permitAll()
+                        .requestMatchers("/static/**", "/css/**", "/image/**", "/js/**", "/uploads/**").permitAll()
+                        .requestMatchers("/site/page/**").permitAll()
+                        .requestMatchers("/site/products/**").permitAll()
+                        .requestMatchers("/site/accounts/*").permitAll()
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/site/carts/**", "/site/VNPays/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                        .anyRequest().authenticated())
+                .formLogin(login -> login
+                        .loginPage("/site/accounts/login")
+                        .loginProcessingUrl("/site/accounts/login")
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .successHandler((request, response, authentication) -> {
+                            // Chuyển hướng sau khi đăng nhập thành công
+                            boolean isAdmin = authentication.getAuthorities().stream()
+                                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+                            if (isAdmin) {
+                                response.sendRedirect("/admin/products/searchpaginated");
+                            } else {
+                                response.sendRedirect("/site/page/home");
+                            }
+                        }))
+                .logout(logout -> logout
+                        .logoutUrl("/site/accounts/logout")
+                        .logoutSuccessUrl("/site/accounts/login")
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID", "loggedInUser")
+                        .invalidateHttpSession(true)
+                        );
 
-//     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//         auth.authenticationProvider(authenticationProvider());
-//     }
+        return http.build();
+    }
 
-//     @Bean
-//     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//         http.csrf().disable()
-//                 .authorizeHttpRequests(authorize -> authorize
-//                         .requestMatchers("/home/index", "/auth/login/**").permitAll()
-//                         .requestMatchers("/home/admins").hasRole("ADMIN")
-//                         .requestMatchers("/home/user").hasAnyRole("ADMIN", "USER")
-//                         .anyRequest().permitAll())
-//                 .formLogin(form -> form
-//                         .loginPage("/auth/login/form")
-//                         .loginProcessingUrl("/auth/login")
-//                         .defaultSuccessUrl("/auth/login/success", false)
-//                         .failureUrl("/auth/login/error")
-//                         .usernameParameter("username")
-//                         .passwordParameter("password"))
-
-//                 .logout(logout -> logout
-//                         .logoutUrl("/auth/logoff")
-//                         .logoutSuccessUrl("/auth/logoff/success"))
-
-//                 .exceptionHandling(exception -> exception
-//                         .accessDeniedPage("/auth/access/denied"))
-
-//                 .oauth2Login(oauth2 -> oauth2
-//                         .loginPage("/auth/login/form") // Custom login page for OAuth2
-//                         .defaultSuccessUrl("/oauth2/login/success", true) // URL on successful OAuth2 login
-//                         .failureUrl("/auth/login/error") // URL on OAuth2 login failure
-//                         .authorizationEndpoint(auth -> auth
-//                                 .baseUri("/oauth2/authorization")));
-
-//         return http.build();
-//     }
-// }
+}

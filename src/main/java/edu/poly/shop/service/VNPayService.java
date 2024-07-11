@@ -1,7 +1,9 @@
-package edu.poly.shop.config;
+package edu.poly.shop.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
+
+import edu.poly.shop.config.VNPayConfig;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

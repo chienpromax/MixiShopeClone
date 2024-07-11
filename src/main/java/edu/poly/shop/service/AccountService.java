@@ -16,6 +16,7 @@ import edu.poly.shop.repository.AccountRepository;
 
 public interface AccountService {
 
+	Account findByUsername(String userName);
 
 	void deleteAll();
 

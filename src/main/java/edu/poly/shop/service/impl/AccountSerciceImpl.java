@@ -30,6 +30,12 @@ public class AccountSerciceImpl implements AccountService{
 	}
 
 	@Override
+	public Account findByUsername(String userName){
+		return accountRepository.findByUsername(userName);
+	}
+
+
+	@Override
 	public List<Account> findByNameContaining(String username) {
 		return accountRepository.findByUsernameContaining(username);
 	}

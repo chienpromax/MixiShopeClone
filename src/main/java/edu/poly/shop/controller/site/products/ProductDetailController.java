@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import edu.poly.shop.model.Product;
 import edu.poly.shop.service.CustomerService;
 import edu.poly.shop.service.OrderService;
 import edu.poly.shop.service.ProductService;
+import edu.poly.shop.utils.CustomUserDetails;
 import edu.poly.shop.utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -41,11 +44,15 @@ public class ProductDetailController {
     public String requestMethodName() {
         return "site/products/productdetail";
     }
-    
+
     @PostMapping("addtocart/{productId}")
-    public String addToCart(@PathVariable("productId") Long productId, HttpServletRequest request, Model model) {
+    public String addToCart(@PathVariable("productId") Long productId, Model model) {
         // Kiểm tra đăng nhập
-        Account loggedInUser = (Account) SessionUtils.getAttribute(request, "loggedInUser");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/site/accounts/login";
+        }
+        CustomUserDetails loggedInUser = (CustomUserDetails) authentication.getPrincipal();
         if (loggedInUser == null) {
             return "redirect:/site/accounts/login";
         }
@@ -57,8 +64,7 @@ public class ProductDetailController {
         }
         // Thêm sản phẩm vào giỏ hàng
         orderService.addProductToCart(customer.getCustomerId(), productId);
-
-        // return "redirect:/site/carts/cartdetail"; // Chuyển hướng tới trang giỏ hàng
+        // Chuyển hướng tới trang chi tiết sản phẩm
         return "redirect:/site/products/productdetail/" + productId;
     }
 
