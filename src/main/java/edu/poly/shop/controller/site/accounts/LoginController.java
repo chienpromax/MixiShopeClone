@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,19 +49,16 @@ public class LoginController {
         if (accountOptional.isPresent()
                 && bCryptPasswordEncoder.matches(password, accountOptional.get().getPassword())) {
             Account account = accountOptional.get();
-            // SessionUtils.removeAttribute(request, "loggedInUser");
-            // SessionUtils.setAttribute(request, "loggedInUser", account);
             CookieUtils.addCookie(response, "loggedInUser", username, 24 * 60 * 60);
             if (account.isRole()) {
                 return "redirect:/admin/products/searchpaginated";
             }
-            // Lấy thông tin giỏ hàng
             List<OrderDetailDto> orderDetails = orderDetailService.findAllOrderDetailsWithProductsByUsername(username);
             model.addAttribute("orderdetails", orderDetails);
 
             return "redirect:/site/page/home";
         } else {
-            model.addAttribute("message", "Sai tên đăng nhập hoạc mật khẩu");
+            model.addAttribute("message", "Sai tên đăng nhập hoặc mật khẩu");
             model.addAttribute("user", new AccountDto());
             return "site/accounts/login";
         }
@@ -77,16 +75,20 @@ public class LoginController {
             if (principal instanceof CustomUserDetails) {
                 CustomUserDetails userDetails = (CustomUserDetails) principal;
 
-                // Lấy thông tin người dùng từ CustomUserDetails và đưa vào model
                 AccountDto accountDto = new AccountDto();
                 accountDto.setUsername(userDetails.getUsername());
                 model.addAttribute("user", accountDto);
+            } else if (principal instanceof DefaultOAuth2User) {
+                DefaultOAuth2User oAuth2User = (DefaultOAuth2User) principal;
+
+                String username = oAuth2User.getAttribute("name");
+                AccountDto accountDto = new AccountDto();
+                accountDto.setUsername(username);
+                model.addAttribute("user", accountDto);
             } else {
-                // Xử lý nếu principal không phải là CustomUserDetails
                 model.addAttribute("user", new AccountDto());
             }
         } else {
-            // Xử lý nếu chưa đăng nhập
             model.addAttribute("user", new AccountDto());
         }
 
@@ -101,5 +103,4 @@ public class LoginController {
         }
         return "redirect:/site/accounts/login?logout";
     }
-
 }

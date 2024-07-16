@@ -52,33 +52,12 @@
                                 th:href="@{/site/accounts/changepassword}">Đổi mật khẩu</a>
                             <a class="dropdown-item nav-link" sec:authorize="isAuthenticated()"
                                 th:href="@{/site/carts/checkdetail}">Thông tin Người dùng</a>
-                                <a class="dropdown-item nav-link" sec:authorize="isAuthenticated() and hasAuthority('ROLE_ADMIN')"
+                            <a class="dropdown-item nav-link" sec:authorize="isAuthenticated() and hasAuthority('ROLE_ADMIN')"
                                 th:href="@{/admin/products/searchpaginated}">Trang Admin</a>
                             <a class="dropdown-item nav-link" sec:authorize="isAuthenticated()"
                                 th:href="@{/site/accounts/logout}">Đăng xuất</a>
                         </div>
                     </li>
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <span th:if="${loggedInUser != null}" th:text="${loggedInUser.username}"></span>
-                            <span th:unless="${loggedInUser != null}">Tài khoản</span>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item nav-link" th:unless="${loggedInUser != null}"
-                                th:href="@{/site/accounts/login}">Đăng nhập</a>
-                            <a class="dropdown-item nav-link" th:unless="${loggedInUser != null}"
-                                th:href="@{/site/accounts/register}">Đăng ký</a>
-                            <a class="dropdown-item nav-link" th:unless="${loggedInUser != null}"
-                                th:href="@{/site/accounts/forgotpassword}">Quên mật khẩu</a>
-                            <a class="dropdown-item nav-link" th:if="${loggedInUser != null}"
-                                th:href="@{/site/accounts/changepassword}">Đổi mật khẩu</a>
-                            <a class="dropdown-item nav-link" th:if="${loggedInUser != null}"
-                                th:href="@{/site/carts/checkdetail}">Thông tin Người dùng</a>
-                            <a class="dropdown-item nav-link" th:if="${loggedInUser != null}"
-                                th:href="@{/site/accounts/logout}">Đăng xuất</a>
-                        </div>
-                    </li> -->
                 </ul>
                 <ul class="navbar-nav mt-lg-0 cart ms-3">
                     <li class="nav-item nav-item-cart">

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,24 +47,36 @@ public class ProductDetailController {
     }
 
     @PostMapping("addtocart/{productId}")
-    public String addToCart(@PathVariable("productId") Long productId, Model model) {
+    public String addToCart(@PathVariable("productId") Long productId, Model model, Authentication authentication) {
         // Kiểm tra đăng nhập
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/site/accounts/login";
         }
-        CustomUserDetails loggedInUser = (CustomUserDetails) authentication.getPrincipal();
-        if (loggedInUser == null) {
+        Object principal = authentication.getPrincipal();
+        String username = null;
+
+        if (principal instanceof CustomUserDetails) {
+            CustomUserDetails loggedInUser = (CustomUserDetails) principal;
+            username = loggedInUser.getUsername();
+        } else if (principal instanceof OAuth2User) {
+            OAuth2User oAuth2User = (OAuth2User) principal;
+            username = oAuth2User.getAttribute("name");
+        }
+        if (username == null) {
             return "redirect:/site/accounts/login";
         }
         // Lấy thông tin khách hàng
-        String username = loggedInUser.getUsername();
         Customer customer = customerService.findByUsername(username);
         if (customer == null) {
             return "redirect:/site/carts/checkdetail";
         }
+        // Kiểm tra thông tin khách hàng
+        if (customer.getAddress() == null || customer.getPhone() == null) {
+            return "redirect:/site/carts/checkdetail";
+        }
         // Thêm sản phẩm vào giỏ hàng
         orderService.addProductToCart(customer.getCustomerId(), productId);
+
         // Chuyển hướng tới trang chi tiết sản phẩm
         return "redirect:/site/products/productdetail/" + productId;
     }

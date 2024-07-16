@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import edu.poly.shop.controller.site.accounts.LoginWithFBGGController;
+import edu.poly.shop.service.CustomOAuth2UserService;
 import edu.poly.shop.service.CustomUserDetailService;
 
 @Configuration
@@ -16,6 +18,10 @@ public class SecurityConfig {
 
     @Autowired
     private CustomUserDetailService customUserDetailService;
+    @Autowired
+    CustomOAuth2UserService customOAuth2UserService;
+    @Autowired
+    LoginWithFBGGController loginWithFBGGController;
 
     @Bean
     BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -31,7 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/static/**", "/css/**", "/image/**", "/js/**", "/uploads/**").permitAll()
                         .requestMatchers("/site/page/**").permitAll()
                         .requestMatchers("/site/products/**").permitAll()
-                        .requestMatchers("/site/accounts/*").permitAll()
+                        .requestMatchers("/site/accounts/*", "/oauth2/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/site/carts/**", "/site/VNPays/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                         .anyRequest().authenticated())
@@ -50,13 +56,23 @@ public class SecurityConfig {
                                 response.sendRedirect("/site/page/home");
                             }
                         }))
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .loginPage("/site/accounts/login")
+                        .successHandler((request, response, authentication) -> {
+                            response.sendRedirect("/site/page/home");
+                        })
+                        // .defaultSuccessUrl("/site/page/home" ,true)
+                        .failureUrl("/site/accounts/login")
+                        .successHandler(loginWithFBGGController)
+                        .userInfoEndpoint()
+                        .userService(customOAuth2UserService)
+                        .and())
                 .logout(logout -> logout
                         .logoutUrl("/site/accounts/logout")
                         .logoutSuccessUrl("/site/accounts/login")
                         .clearAuthentication(true)
                         .deleteCookies("JSESSIONID", "loggedInUser")
-                        .invalidateHttpSession(true)
-                        );
+                        .invalidateHttpSession(true));
 
         return http.build();
     }
