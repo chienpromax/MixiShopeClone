@@ -21,7 +21,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: xuanchient033@gmail.com
-    password: ayiw lqih jicy vmgd
+    password: YOUR_ID
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -36,13 +36,9 @@ spring:
       client:
         registration:
           google:
-            # client-id: 495470626151-93ok84700qqc77unq096bvukuvkk38dn.apps.googleusercontent.com
-            # client-secret: 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
-            client-id: 495470626151-cve0vkliee53jda019k957n5e00oqs6e.apps.googleusercontent.com
-            client-secret: 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
-            redirect-uri: "{baseUrl}/login/oauth2/code/google"
-            scope: profile, email
+            client-id: YOUR_ID
+            client-secret: YOUR_ID
           facebook:
-            client-id: 1013027497116282
-            client-secret: b3d54f58d9152c405408eb0b5ceb06b2
+            client-id: YOUR_ID
+            client-secret: YOUR_ID
 

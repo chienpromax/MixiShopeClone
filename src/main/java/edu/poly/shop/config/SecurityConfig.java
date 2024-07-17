@@ -47,7 +47,6 @@ public class SecurityConfig {
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .successHandler((request, response, authentication) -> {
-                            // Chuyển hướng sau khi đăng nhập thành công
                             boolean isAdmin = authentication.getAuthorities().stream()
                                     .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
                             if (isAdmin) {
@@ -61,7 +60,6 @@ public class SecurityConfig {
                         .successHandler((request, response, authentication) -> {
                             response.sendRedirect("/site/page/home");
                         })
-                        // .defaultSuccessUrl("/site/page/home" ,true)
                         .failureUrl("/site/accounts/login")
                         .successHandler(loginWithFBGGController)
                         .userInfoEndpoint()

@@ -30,10 +30,21 @@
                             <label for="" class="form-label fs-5">Amount</label>
                             <input th:field="*{amount}" type="number" class="form-control" required/>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <label for="" class="form-label fs-5">Status</label>
                             <input th:field="*{status}" type="number" class="form-control" required/>
+                        </div> -->
+                        <div class="col-md-6">
+                            <label for="" class="form-label fs-5">Status</label>
+                            <select th:field="*{status}" class="form-control" required>
+                                <option value="0" th:text="'Đang đặt hàng'"></option>
+                                <option value="1" th:text="'Đã đặt hàng'"></option>
+                                <option value="2" th:text="'Đang giao hàng'"></option>
+                                <option value="3" th:text="'Đã nhận hàng'"></option>
+                                <option value="4" th:text="'Đã thanh toán'"></option>
+                            </select>
                         </div>
+                        
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">

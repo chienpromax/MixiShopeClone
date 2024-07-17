@@ -54,7 +54,18 @@
                             <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}"></td>
                             <td th:text="${order.customer.fullName}"></td>
                             <td th:text="${order.amount}"></td>
-                            <td th:text="${order.status}"></td>
+                            <td>
+                                <span style="color: rgb(240, 90, 90);" th:if="${order.status == 0}"
+                                    th:text="'Đang đặt hàng'"></span>
+                                <span style="color: rgb(227, 76, 76);" th:if="${order.status == 1}"
+                                    th:text="'Đã đặt hàng'"></span>
+                                <span style="color: rgb(219, 65, 65);" th:if="${order.status == 2}"
+                                    th:text="'Đang giao hàng'"></span>
+                                <span style="color: rgb(0, 156, 218);" th:if="${order.status == 3}"
+                                    th:text="'Đã nhận hàng'"></span>
+                                <span style="color: rgb(138, 2, 187);" th:if="${order.status == 4}"
+                                    th:text="'Đã thanh toán'"></span>
+                            </td>
                             <td>
                                 <a th:href="@{'/admin/orders/edit/' + ${order.orderid}}" class="btn btn-primary"
                                     type="button">Sửa</a> |

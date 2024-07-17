@@ -41,26 +41,26 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         AOS.init({
             duration: 1500,
         });
-        // window.addEventListener('scroll', function () {
-        //     var navbar = document.querySelector('.navbar');
-        //     if (window.scrollY > 0) {
-        //         navbar.classList.add('navbar-scrolled');
-        //     } else {
-        //         navbar.classList.remove('navbar-scrolled');
-        //     }
-        // });
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     const zoomImage = document.querySelector('.zoom-on-hover');
-        //     const zoomContainer = zoomImage.parentElement;
-        //     zoomContainer.addEventListener('mousemove', (e) => {
-        //         const rect = zoomContainer.getBoundingClientRect();
-        //         const x = e.clientX - rect.left;
-        //         const y = e.clientY - rect.top;
-        //         const xPercent = x / rect.width * 100;
-        //         const yPercent = y / rect.height * 100;
-        //         zoomImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
-        //     });
-        // });
+        window.addEventListener('scroll', function () {
+            var navbar = document.querySelector('.navbar');
+            if (window.scrollY > 0) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const zoomImage = document.querySelector('.zoom-on-hover');
+            const zoomContainer = zoomImage.parentElement;
+            zoomContainer.addEventListener('mousemove', (e) => {
+                const rect = zoomContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xPercent = x / rect.width * 100;
+                const yPercent = y / rect.height * 100;
+                zoomImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+            });
+        });
     </script>
 </body>
 
