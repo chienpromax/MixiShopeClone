@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/static/**", "/css/**", "/image/**", "/js/**", "/uploads/**").permitAll()
                         .requestMatchers("/site/page/**").permitAll()
                         .requestMatchers("/site/products/**").permitAll()
+                        .requestMatchers("/site/video/**").permitAll()
                         .requestMatchers("/site/accounts/*", "/oauth2/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/site/carts/**", "/site/VNPays/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")

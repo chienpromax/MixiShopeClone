@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{site/index.html}">
+
+<head>
+    <script>
+        function showShareForm(videoId) {
+            document.getElementById('shareForm-' + videoId).style.display = 'block';
+            document.getElementById('overlay').classList.add('show');
+        }
+
+        function hideShareForm() {
+            var forms = document.querySelectorAll('.share-form');
+            forms.forEach(form => form.style.display = 'none');
+            document.getElementById('overlay').classList.remove('show');
+        }
+    </script>
+</head>
+
+<body>
+    <section class="container" layout:fragment="main">
+        <div class="row py-4">
+            <div class="col-md-6 m-auto">
+                <form action="/site/video/search" method="get">
+                    <div class="mb-3 d-flex">
+                        <input type="text" class="form-control" name="query" placeholder="Tìm Kiếm" />
+                        <button class="btn-video-seach" type="submit"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </form>
+            </div>
+            <h1 class="fw-bold text-center">Danh Sách Video Mới Nhất</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 py-4" th:each="video : ${videos}">
+                <iframe width="400" height="240" th:src="'https://www.youtube.com/embed/' + ${video.id.videoId}"
+                    frameborder="0" allowfullscreen></iframe>
+                <h5 th:text="${video.snippet.title}"></h5>
+                <!-- <p th:text="${video.snippet.description}"></p> -->
+
+                <button class="btn-video-seach" type="button" onclick="showShareForm('${video.id.videoId}')">Chia Sẻ Video</button>
+
+                <!-- Modal Overlay -->
+                <div id="overlay" class="overlay" onclick="hideShareForm()"></div>
+
+                <!-- Modal Form -->
+                <div id="shareForm-${video.id.videoId}" class="share-form">
+                    <button type="button" class="close" onclick="hideShareForm()">&times;</button>
+                    <form th:action="@{/site/video/share}" method="post">
+                        <input type="hidden" name="videoId" th:value="${video.id.videoId}" />
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control"
+                                placeholder="Nhập email để chia sẻ video" required />
+                        </div>
+                        <button type="submit" class="btn btn-video-seach">Gửi</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
